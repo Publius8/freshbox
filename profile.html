@@ -11,6 +11,19 @@
 </head>
 
 <style>
+  .change-pass-message {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.change-pass-message.success {
+  color: green;
+}
+
+.change-pass-message.error {
+  color: red;
+}
+
 .tab-content {
   opacity: 0;
   max-height: 0;
@@ -325,30 +338,33 @@ arrowIcon.classList.toggle('rotated'); // переключаем класс дл
                       </div>
                     </div>
                 
-                    <div class="form-wrapper">
-                      <form class="form-grid">
-                        <label>
-                          <span>Ad</span>
-                          <input placeholder="Adınız" required />
-                        </label>
-                        <label>
-                          <span>Soyad</span>
-                          <input placeholder="Soyadınız" required />
-                        </label>
-                        <label>
-                          <span>Mail</span>
-                          <input placeholder="Mail adresiniz" required />
-                        </label>
-                        <label>
-                          <span>Telefon</span>
-                          <input placeholder="Telefon nömrəsi" required />
-                        </label>
-                      </form>
-                
-                      <div class="button-wrapper">
-                        <button class="orange-button" type="submit">Düzəliş et</button>
-                      </div>
-                    </div>
+<div class="form-wrapper">
+  <form class="form-grid" id="profileUpdateForm">
+    <label>
+      <span>Ad və Soyad</span>
+      <input id="update_full_name" name="full_name" placeholder="Adınız və Soyadınız" required />
+    </label>
+    <label>
+      <span>Mail</span>
+      <input id="update_email" name="email" type="email" placeholder="Mail adresiniz" required  />
+    </label>
+    <label>
+      <span>Telefon</span>
+      <input id="update_phone" name="phone" type="tel" placeholder="Telefon nömrəsi" required />
+    </label>
+    <label>
+      <span>Address</span>
+      <input id="update_address" name="address" type="tel" placeholder="Address" required />
+    </label>
+  </form>
+
+  <div class="button-wrapper">
+    <button class="orange-button" type="submit" form="profileUpdateForm">Düzəliş et</button>
+  </div>
+
+  <div id="profileUpdateMessage" class="message"></div>
+</div>
+
                   </div>
                 
                   <!-- Təhlükəsizlik -->
@@ -379,55 +395,7 @@ arrowIcon.classList.toggle('rotated'); // переключаем класс дл
                         <h2>Bəyəndiyim məhsullar</h2>
                     </div>
                     <div class="favourites-box">
-                        <div class="favourites-card">
-                            <div class="imgae-circle">
-                                <div class="image-container"><img src="./assets/img/7683c493753f0d78fecbe07dc26b0e8b.png" alt="productImage"></div>
-                                <div class="favourite-circle"><img src="./assets/img/orangeHerz.svg" alt="orangeHerz"></div>
-                            </div>
-                            
-                            <div class="name-weight">
-                                <h3>Greyfruit</h3>
-                                <span>1 kg</span>
-                            </div>
-                            <div class="price">
-                                <span>2.90 man</span>
-                            </div>
-                            <div>
-                                <button>İndi sifariş et</button>
-                            </div>
-                        </div>
-                        <div class="favourites-card">
-                            <div class="imgae-circle">
-                                <div class="image-container"><img src="./assets/img/7683c493753f0d78fecbe07dc26b0e8b.png" alt="productImage"></div>
-                                <div class="favourite-circle"><img src="./assets/img/orangeHerz.svg" alt="orangeHerz"></div>
-                            </div>
-                             <div class="name-weight">
-                                <h3>Greyfruit</h3>
-                                <span>1 kg</span>
-                            </div>
-                            <div class="price">
-                                <span>2.90 man</span>
-                            </div>
-                            <div>
-                                <button>İndi sifariş et</button>
-                            </div>
-                        </div>
-                        <div class="favourites-card">
-                            <div class="imgae-circle">
-                                <div class="image-container"><img src="./assets/img/7683c493753f0d78fecbe07dc26b0e8b.png" alt="productImage"></div>
-                                <div class="favourite-circle"><img src="./assets/img/orangeHerz.svg" alt="orangeHerz"></div>
-                            </div>
-                            <div class="name-weight">
-                                <h3>Greyfruit</h3>
-                                <span>1 kg</span>
-                            </div>
-                            <div class="price">
-                                <span>2.90 man</span>
-                            </div>
-                            <div>
-                                <button>İndi sifariş et</button>
-                            </div>
-                        </div>
+
                     </div>
                   </div>
                 
@@ -498,9 +466,9 @@ arrowIcon.classList.toggle('rotated'); // переключаем класс дл
                                 <input placeholder="Yeni parolu yenidən daxil edin" required />
                               </label>
                             </form>
-                      
+                        <div id="passwordMessage" style="margin-top: 10px; font-weight: bold;"></div>
                             <div class="button-wrapper">
-                              <button class="orange-button" type="submit">Təsdiqlə</button>
+                              <button class="orange-button" id="change-pass" type="submit">Təsdiqlə</button>
                             </div>
                           </div>
                     </div>
@@ -525,6 +493,9 @@ arrowIcon.classList.toggle('rotated'); // переключаем класс дл
         </div>
       </div>
       
+
+
+      <script src="./assets/scripts/index.js"></script>
       <script>
         const buttons = document.querySelectorAll('.leftSide .buttonStyles');
         const tabContents = document.querySelectorAll('.tab-content');

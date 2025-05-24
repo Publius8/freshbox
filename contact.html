@@ -10,6 +10,19 @@
     <title>Bizimlə əlaqə</title>
 </head>
 <style>
+          .error {
+      background-color: rgba(220, 53, 69, 0.1);
+      color: red;
+      display: block;
+    }
+        .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: none;
+    }
     .switchButtons button {
     transition: opacity 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
@@ -207,7 +220,9 @@
                 <a href="#">
                     <img src="./assets/img/language.png" alt="language">
                 </a>
-                <button class="signIn" id="modalPage">Daxil ol</button>
+                        <div id="authControl">
+            <button class="signIn" id="modalPage">Daxil ol</button>
+            </div>
             </div>
     
             <div class="overlaytus" id="overlaytus" onclick="closeNav()"></div>
@@ -239,7 +254,9 @@
                 </div>
                 
             
-                <button class="sidebar-button" onclick="document.location='mobile_sing.html'">Qeydiyyatdan keç</button>
+                <div id="mobileAuthControl">
+  <button class="sidebar-button" onclick="document.location='mobile_sing.html'">Qeydiyyatdan keç</button>
+</div>
             </div>
             
     
@@ -295,18 +312,19 @@
             </div>
             
             <!-- Registration Form -->
-            <div id="registerForm" class="formContainer" style="display:none;">
-                <form>
-                    <label>Ad və Soyad</label>
-                    <div><img src="./assets/img/User.png" alt="NameSurname"><input type="text" id="NameAndSurname" placeholder="Ad və Soyad" required></div>
-                    <label>Mail adresiniz</label>
-                    <div><img src="./assets/img/Message.png" alt="mail"><input type="text" id="email" placeholder="E-mail" required></div>
-                    <label>Parol daxil edin</label>
-                    <div><img src="./assets/img/Lock password.png" alt="password"><input type="password" id="password" placeholder="Parol" required></div>
-                    <span>Ən az 8 simvildan ibarət olmalıdır</span>
-                    <input style="cursor: pointer;" type="submit" value="Qeydiyyatdan keç">
-                </form>
-            </div>
+        <div id="registerForm" class="formContainer" style="display:none;">
+            <form id="registerFormAction">
+                <label for="full_name">Ad və Soyad</label>
+                <div><img src="./assets/img/User.png" alt="NameSurname"><input type="text" id="full_name" name="full_name" placeholder="Ad və Soyad" required></div>
+                <label for="register_email">Mail adresiniz</label>
+                <div><img src="./assets/img/Message.png" alt="mail"><input type="text" id="register_email" name="email" placeholder="E-mail" required></div>
+                <label for="register_password">Parol daxil edin</label>
+                <div><img src="./assets/img/Lock password.png" alt="password"><input type="password" id="register_password" name="password" placeholder="Parol" required></div>
+                <span>Ən az 8 simvildan ibarət olmalıdır</span>
+                <input style="cursor: pointer;" type="submit" value="Qeydiyyatdan keç">
+            </form>
+            <div id="registerMessage" class="message"></div>
+        </div>
             
             <!-- Login Form -->
             <div id="loginForm" class="formContainer" style="display:block;">
@@ -384,6 +402,8 @@
             <div class="line"></div>
             <span>Freshbox©agentliyi 2025dən bəri. Bütün hüquqlar qorunur.</span>
         </div>
+
+            <script src="./assets/scripts/index.js"></script>
       <script>
                 // Инициализация AOS
                 AOS.init();
@@ -480,6 +500,19 @@ function switchForm(formType) {
 }
 
 
+window.addEventListener("load", function() {
+      if (window.innerWidth <= 768) {
+        const mobileAuthControl = document.getElementById('mobileAuthControl');
+if (mobileAuthControl) {
+  mobileAuthControl.innerHTML = `
+    <a href="./profile.html">
+      <img src="./assets/img/Profile.png" alt="Profile">
+    </a>
+  `;
+}
+  }
+
+});
       </script>
 </body>
 </html>
