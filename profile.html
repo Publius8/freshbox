@@ -450,28 +450,29 @@ arrowIcon.classList.toggle('rotated'); // переключаем класс дл
                         <p>Hesabınızın təhlükəsizliyini artırmaq üçün parolunuzu dəyişə bilərsiniz. Yeni parol yaratdıqda, zəif parollardan qaçınmağa diqqət edin.</p>
                     </div>
 
-                    <div class="form-pass-change">
-                        <div class="form-wrapper">
-                            <form class="form-grid position-change-pass">
-                              <label>
-                                <span>Əvvəlki parol</span>
-                                <input placeholder="Əvvəlki parol" required />
-                              </label>
-                              <label>
-                                <span>Yeni parol</span>
-                                <input placeholder="Yeni parol" required />
-                              </label>
-                              <label>
-                                <span>Yeni parolu yenidən daxil edin</span>
-                                <input placeholder="Yeni parolu yenidən daxil edin" required />
-                              </label>
-                            </form>
-                        <div id="passwordMessage" style="margin-top: 10px; font-weight: bold;"></div>
-                            <div class="button-wrapper">
-                              <button class="orange-button" id="change-pass" type="submit">Təsdiqlə</button>
-                            </div>
-                          </div>
-                    </div>
+ <div class="form-pass-change">
+  <div class="form-wrapper">
+    <form id="passwordForm" class="form-grid position-change-pass">
+      <label>
+        <span>Əvvəlki parol</span>
+        <input id="oldPassword" type="password" placeholder="Əvvəlki parol" required />
+      </label>
+      <label>
+        <span>Yeni parol</span>
+        <input id="newPassword" type="password" placeholder="Yeni parol" required />
+      </label>
+      <label>
+        <span>Yeni parolu yenidən daxil edin</span>
+        <input id="confirmPassword" type="password" placeholder="Yeni parolu yenidən daxil edin" required />
+      </label>
+      <div class="button-wrapper">
+        <button class="orange-button" id="change-pass" type="button">Təsdiqlə</button>
+
+      </div>
+    </form>
+    <div id="passwordMessage" style="margin-top: 10px; font-weight: bold;"></div>
+  </div>
+</div>
                   </div>
 
                   <div class="tab-content" id="logout">

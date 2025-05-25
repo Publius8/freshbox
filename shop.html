@@ -488,8 +488,8 @@
                       </div>
                       
                 </div>
-                <div class="products-container">
-<div class="products-card" data-id="123" data-fav="1">
+                <div class="products-container" id="productList">
+<!-- <div class="products-card" data-id="123" data-fav="1">
   <div class="imgae-circle">
     <div class="image-container">
       <img src="./assets/img/7683c493753f0d78fecbe07dc26b0e8b.png" alt="productImage">
@@ -508,9 +508,9 @@
   <div>
     <button role="link" onclick="window.location.href='product-page.html';">İndi sifariş et</button>
   </div>
-</div>
+</div> -->
 
-                      
+                
 
                         
                 </div>
@@ -664,75 +664,70 @@ if (mobileAuthControl) {
 
 
 document.addEventListener("DOMContentLoaded", () => {
+ document.querySelectorAll(".favourite-circle").forEach(circle => {
+  circle.addEventListener("click", async (e) => {
+    e.stopPropagation();
 
-  document.querySelectorAll(".favourite-circle").forEach(circle => {
-    circle.addEventListener("click", async (e) => {
-      e.stopPropagation();
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
 
-        token = localStorage.getItem('token');
-        userId = localStorage.getItem('userId');
+    if (!token || !userId) {
+      showToast("Zəhmət olmasa, əvvəlcə hesabınıza daxil olun", true);
+      return;
+    }
 
-      if (!token || !userId) {
-        showToast("Zəhmət olmasa, əvvəlcə hesabınıza daxil olun", true);
-        return;
+    const elem = e.currentTarget;
+    const productId = elem.getAttribute("data-id");
+    const isFaved = elem.getAttribute("data-fav") === "1";
+
+    try {
+      if (isFaved) {
+        // Sevimlərdən sil
+        const res = await fetch('https://api.fresback.squanta.az/api/fave/delete', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            user_id: userId,
+            product_id: productId
+          }),
+        });
+
+        if (!res.ok) throw new Error('Xəta baş verdi');
+
+        elem.setAttribute("data-fav", "0");
+        elem.querySelector("img").src = "./assets/img/emptyHerz.svg";
+        showToast("Sevimlərdən silindi");
+
+      } else {
+        // Sevimlərə əlavə et
+        const res = await fetch('https://api.fresback.squanta.az/api/fave/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            user_id: userId,
+            product_id: productId
+          }),
+        });
+
+        if (!res.ok) throw new Error('Xəta baş verdi');
+
+        elem.setAttribute("data-fav", "1");
+        elem.querySelector("img").src = "./assets/img/orangeHerz.svg";
+        showToast("Sevimlərə əlavə edildi");
       }
-
-      const elem = e.currentTarget;
-      const productId = elem.getAttribute("data-id");
-//      const isFaved = elem.getAttribute("data-fav");
-
-        let isFaved = false;    
-      try {
-        if (isFaved) {
-          // Удалить из избранного
-          const res = await fetch('https://api.fresback.squanta.az/api/fave/delete', {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              user_id: userId,
-              product_id: productId
-            }),
-          });
-
-
-          if (!res.ok) throw new Error('Xəta baş verdi');
-
-          // Обновить UI
-          elem.setAttribute("data-fav", "0");
-          elem.querySelector("img").src = "./assets/img/emptyHerz.svg";
-          showToast("Sevimlərdən silindi");
-
-        } else {
-          // Добавить в избранное
-
-          const res = await fetch('https://api.fresback.squanta.az/api/fave/add', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              user_id: userId,
-              product_id: productId
-            }),
-          });
-          
-          if (res.ok){      //throw new Error('Xəta baş verdi');
-          // Обновить UI
-          elem.setAttribute("data-fav", "1");
-          elem.querySelector("img").src = "./assets/img/orangeHerz.svg";
-          showToast("Sevimlərə əlavə edildi");
-            }
-        }
-      } catch (err) {
-        console.error("Sevimlər xətası:", err);
-        showToast("Xəta baş verdi", true);
-      }
-    });
+    } catch (err) {
+      console.error("Sevimlər xətası:", err);
+      showToast("Xəta baş verdi", true);
+    }
   });
+});
+
 });
 
 function showToast(message, isError = false) {
@@ -755,6 +750,126 @@ function showToast(message, isError = false) {
     toast.remove();
   }, 2000);
 }
+
+
+
+
+  async function loadProducts() {
+    try {
+      const res = await fetch('https://api.fresback.squanta.az/api/product/all');
+      const products = await res.json();
+
+      const container = document.getElementById('productList');
+      container.innerHTML = ''; // təmizlə
+
+      products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'products-card';
+        productCard.dataset.id = product.id;
+        productCard.dataset.fav = product.fav || '0'; // əgər fav varsa, yoxsa 0
+
+        productCard.innerHTML = `
+          <div class="imgae-circle">
+            <div class="image-container">
+              <img src="https://api.fresback.squanta.az/images/${product.image}" alt="${product.title}">
+            </div>
+          <div class="favourite-circle" data-id="${product.id}" data-fav="${product.fav === 1 ? '1' : '0'}">
+
+            <img src="./assets/img/orangeHerz.svg" alt="fav-icon">
+
+            </div>
+          </div>
+          <div class="name-weight">
+            <h3>${product.title}</h3>
+            <span>${product.quantity} eded</span>
+            <span>${product.weight > 0 ? product.weight + " kg" : ""}</span>
+          </div>
+          <div class="price">
+            <span>${product.price} man</span>
+          </div>
+          <div>
+            <button role="link" onclick="window.location.href='product-page.html';">İndi sifariş et</button>
+          </div>
+        `;
+
+        container.appendChild(productCard);
+      });
+
+      attachFavListeners(); // burada listenerləri əlavə et
+
+    } catch (error) {
+      console.error('Xəta:', error);
+    }
+  }
+
+function attachFavListeners() {
+  document.querySelectorAll(".favourite-circle").forEach(circle => {
+    circle.addEventListener("click", async (e) => {
+      e.stopPropagation();
+
+      const token = localStorage.getItem('token');
+      const userId = localStorage.getItem('userId');
+
+      if (!token || !userId) {
+        alert("Zəhmət olmasa, əvvəlcə hesabınıza daxil olun");
+        return;
+      }
+
+      const elem = e.currentTarget;
+      const productId = elem.getAttribute("data-id");
+      let isFaved = elem.getAttribute("data-fav") === "1";
+
+      try {
+        if (isFaved) {
+          // Sevimlərdən sil
+          const res = await fetch('https://api.fresback.squanta.az/api/fave/delete', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              user_id: userId,
+              product_id: productId
+            }),
+          });
+
+          if (!res.ok) throw new Error('Xəta baş verdi');
+
+          elem.setAttribute("data-fav", "0");
+          elem.querySelector("img").src = "./assets/img/emptyHerz.svg";
+          alert("Sevimlərdən silindi");
+
+        } else {
+          // Sevimlərə əlavə et
+          const res = await fetch('https://api.fresback.squanta.az/api/fave/add', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              user_id: userId,
+              product_id: productId
+            }),
+          });
+
+          if (!res.ok) throw new Error('Xəta baş verdi');
+
+          elem.setAttribute("data-fav", "1");
+          elem.querySelector("img").src = "./assets/img/orangeHerz.svg";
+          alert("Sevimlərə əlavə edildi");
+        }
+      } catch (err) {
+        console.error("Sevimlər xətası:", err);
+        alert("Xəta baş verdi");
+      }
+    });
+  });
+}
+
+loadProducts();
+
          </script>
 </body>
 </html>

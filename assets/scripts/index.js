@@ -271,27 +271,30 @@ document.addEventListener('DOMContentLoaded', () => {
   
 // PASS CHANGE START
 
-  const passwordSection = document.querySelector('.change-pass');
-  const changePasswordForm = passwordSection?.querySelector('.form-grid');
-  const submitButton = passwordSection?.querySelector('#change-pass');
+   const passwordMessage = document.getElementById('passwordMessage');
+  // form elementi (düzgün işləməsi üçün əlavə et)
+  const passwordForm = document.getElementById('passwordForm');
+
+  // Mesaj göstərmə funksiyası
+  function showPasswordMessage(message, isError) {
+    passwordMessage.textContent = message;
+    passwordMessage.style.color = isError ? 'red' : 'green';
+    passwordMessage.className = isError ? 'error' : 'success';
+  }
+
+  // Əsas parol dəyişmə funksiyası
+  async function passresstss() {
 
 
-  submitButton?.addEventListener('click', async (e) => {
-    e.preventDefault();
+    const oldPassword = document.getElementById('oldPassword').value.trim();
+    const newPassword = document.getElementById('newPassword').value.trim();
+    const confirmPassword = document.getElementById('confirmPassword').value.trim();
 
-   token = localStorage.getItem('token');
-   userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
 
-
-    const oldPassword = changePasswordForm?.querySelector('input[placeholder="Əvvəlki parol"]')?.value.trim();
-    const newPassword = changePasswordForm?.querySelector('input[placeholder="Yeni parol"]')?.value.trim();
-    const confirmPassword = changePasswordForm?.querySelector('input[placeholder="Yeni parolu yenidən daxil edin"]')?.value.trim();
-    const messageBlock = passwordSection.querySelector('.change-pass-message');
-
-    if (messageBlock) {
-      messageBlock.textContent = '';
-      messageBlock.className = 'change-pass-message';
-    }
+    passwordMessage.textContent = '';
+    passwordMessage.className = '';
 
     if (!oldPassword || !newPassword || !confirmPassword) {
       showPasswordMessage('Bütün sahələri doldurun.', true);
@@ -308,58 +311,159 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    if (!token || !userId) {
+      showPasswordMessage('İstifadəçi daxil olmayıb.', true);
+      return;
+    }
+
     try {
-      const res = await fetch(`https://api.fresback.squanta.az/api/user/change-password`, {
-        method: 'POST',
+      const response = await fetch(`https://api.fresback.squanta.az/api/user/password/${userId}`, {
+        method: 'PUT',
         headers: {
+          'accept': '*/*',
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          user_id: userId,
-          current_password: oldPassword,
-          new_password: newPassword,
-        }),
+          oldPassword,
+          newPassword,
+          confirmPassword
+        })
       });
 
-      const data = await res.json();
+      const data = await response.json();
 
-      if (res.ok) {
+      if (response.ok) {
         showPasswordMessage('Parol uğurla dəyişdirildi!', false);
-        changePasswordForm.reset();
+        passwordForm.reset();
       } else {
-        showPasswordMessage(data.error || 'Xəta baş verdi.', true);
+        showPasswordMessage(data.message || data.error || 'Xəta baş verdi.', true);
       }
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error('Password change error:', error);
       showPasswordMessage('Serverə qoşulmaq mümkün olmadı.', true);
     }
-  });
-
-  function showPasswordMessage(message, isError) {
-    let messageBlock = passwordSection.querySelector('.change-pass-message');
-
-    if (!messageBlock) {
-      messageBlock = document.createElement('div');
-      messageBlock.className = 'change-pass-message';
-      passwordSection.querySelector('.form-pass-change')?.appendChild(messageBlock);
-    }
-
-    messageBlock.textContent = message;
-    messageBlock.classList.toggle('error', isError);
-    messageBlock.classList.toggle('success', !isError);
   }
 
+ 
+   const changePassBtn = document.getElementById('change-pass');
+  if (changePassBtn) {
+    changePassBtn.addEventListener('click', passresstss);
+  }
 // PASS CHANGE FINISH
 
 
+// cart script
+document.addEventListener('DOMContentLoaded', () => {
+  const addToCartForm = document.getElementById('add-to-cart-form');
+  const quantityInput = document.getElementById('numberInput');
+  const productId = document.getElementById('put_name_here').dataset.productId;
+  const userId = localStorage.getItem('user_id');
 
+  if (!userId) {
+    alert('Пользователь не авторизован');
+    return;
+  }
 
+  // add to cart
+  addToCartForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const quantity = parseInt(quantityInput.value, 10);
 
-  // favourites
+    try {
+      const response = await fetch('https://api.fresback.squanta.az/api/cart/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          product_id: productId,
+          quantity: quantity,
+          user_id: userId
+        })
+      });
 
-  // const productsCard = document.querySelector(".products-card");
- 
+      if (!response.ok) {
+        throw new Error('Ошибка при добавлении товара в корзину');
+      }
+
+      const result = await response.json();
+      alert('Товар успешно добавлен в корзину!');
+      await loadCart(); 
+    } catch (error) {
+      console.error(error);
+      alert('Ошибка при добавлении товара');
+    }
+  });
+
+  // buttons + and -
+  window.changeValue = (delta) => {
+    let currentValue = parseInt(quantityInput.value, 10);
+    if (isNaN(currentValue)) currentValue = 1;
+    currentValue += delta;
+    if (currentValue < 1) currentValue = 1;
+    quantityInput.value = currentValue;
+  };
+
+  // cart download
+  async function loadCart() {
+    try {
+      const response = await fetch(`https://api.fresback.squanta.az/api/cart?user_id=${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Error');
+      }
+
+      const cartData = await response.json();
+      const purchasesList = document.querySelector('.purchases-list');
+      purchasesList.innerHTML = '';
+
+      const totalPriceElement = document.getElementById('put_total_here');
+
+      if (!cartData.items || cartData.items.length === 0) {
+        purchasesList.innerHTML = '<p>Empty</p>';
+        totalPriceElement.textContent = '0 AZN';
+        return;
+      }
+
+      cartData.items.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('cart-item');
+        itemElement.innerHTML = `
+          <div class="image-name-weight">
+            <div class="image-box">
+              <img src="${item.image_url}" alt="${item.title}">
+            </div>
+            <div class="text-box">
+              <h3>${item.title}</h3>
+              <span>${item.weight}</span>
+            </div>
+          </div>
+          <div class="quatity-of-products">
+            <span>${item.quantity}</span>
+          </div>
+          <div class="put_price_here">
+            <span>${item.price} AZN</span>
+          </div>
+        `;
+        purchasesList.appendChild(itemElement);
+      });
+
+      totalPriceElement.textContent = `${cartData.total_price} AZN`;
+    } catch (error) {
+      console.error(error);
+      alert('Error');
+    }
+  }
+
+  loadCart();
+});
+
 
 });
 
@@ -368,83 +472,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-// document.addEventListener("DOMContentLoaded", () => {
-
-
-//   document.querySelectorAll(".favourite-circle").forEach(circle => {
-//     circle.addEventListener("click", async (e) => {
-//       e.stopPropagation();
-
-
-//       const elem = e.currentTarget;
-//       const productId = elem.getAttribute("data-id");
-//       const isFaved = elem.getAttribute("data-fav") === "1";
-
-
-
-//       try {
-//         if (isFaved) {
-//           // Удалить из избранного
-//           const res = await fetch('http://localhost:3000/api/fave/delete', {
-//             method: 'DELETE',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify({
-//               user_id: currentUserId,
-//               product_id: productId
-//             }),
-//           });
-
-//           if (!res.ok) throw new Error('Xəta baş verdi');
-
-//           // Обновить UI
-//           elem.setAttribute("data-fav", "0");
-//           elem.querySelector("img").src = "./assets/img/emptyHerz.svg";
-//           showToast("Sevimlərdən silindi");
-
-//         } else {
-//           // Добавить в избранное
-//           const res = await fetch('http://localhost:3000/api/fave/add', {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify({
-//               user_id: currentUserId,
-//               product_id: productId
-//             }),
-//           });
-
-//           if (!res.ok) throw new Error('Xəta baş verdi');
-
-//           // Обновить UI
-//           elem.setAttribute("data-fav", "1");
-//           elem.querySelector("img").src = "./assets/img/orangeHerz.svg";
-//           showToast("Sevimlərə əlavə edildi");
-//         }
-//       } catch (err) {
-//         console.error("Sevimlər xətası:", err);
-//         showToast("Xəta baş verdi", true);
-//       }
-//     });
-//   });
-// });
-
-// function showToast(message, isError = false) {
-//   const toast = document.createElement('div');
-//   toast.textContent = message;
-//   toast.style.position = 'fixed';
-//   toast.style.bottom = '20px';
-//   toast.style.left = '50%';
-//   toast.style.transform = 'translateX(-50%)';
-//   toast.style.padding = '10px 20px';
-//   toast.style.backgroundColor = isError ? 'red' : 'green';
-//   toast.style.color = 'white';
-//   toast.style.borderRadius = '5px';
-//   toast.style.zIndex = '9999';
-//   toast.style.fontSize = '14px';
-//   toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
-//   document.body.appendChild(toast);
-
-//   setTimeout(() => {
-//     toast.remove();
-//   }, 2000);
-// }
