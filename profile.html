@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="./assets/css/profile.css">
+    <!-- <link rel="stylesheet" href="./assets/css/shop.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <title>Profile</title>
@@ -278,39 +279,6 @@
     <button class="openbtn" onclick="openNav()">☰</button>
 
 </nav>
-<script>
-function openNav() {
-// Open the sidebar and overlay
-document.getElementById("mySidebar").classList.add("open");
-document.getElementById("overlaytus").classList.add("show");
-
-// Disable scrolling by setting the body's and html's overflow to 'hidden'
-document.body.style.overflow = 'hidden';
-document.documentElement.style.overflow = 'hidden'; // This ensures scrolling is disabled for the entire document
-}
-
-function closeNav() {
-// Close the sidebar and overlay
-document.getElementById("mySidebar").classList.remove("open");
-document.getElementById("overlaytus").classList.remove("show");
-
-// Re-enable scrolling by restoring the body's and html's overflow property
-document.body.style.overflow = '';
-document.documentElement.style.overflow = ''; // This restores the default scrolling behavior
-}
-
-const languageBtn = document.querySelector('.language-btn');
-const languageDropdown = document.querySelector('.language-dropdown');
-const arrowIcon = document.querySelector('.arrow-icon'); // выбираем стрелку
-
-languageBtn.addEventListener('click', () => {
-languageDropdown.classList.toggle('open');
-arrowIcon.classList.toggle('rotated'); // переключаем класс для поворота
-});
-
-
-</script>
-
     <div class="size">
         
         <div class="main">
@@ -497,6 +465,7 @@ arrowIcon.classList.toggle('rotated'); // переключаем класс дл
 
 
       <script src="./assets/scripts/index.js"></script>
+      <script src="./assets/scripts/profile.js"></script>
       <script>
         const buttons = document.querySelectorAll('.leftSide .buttonStyles');
         const tabContents = document.querySelectorAll('.tab-content');
@@ -532,6 +501,80 @@ arrowIcon.classList.toggle('rotated'); // переключаем класс дл
         cancelLogout.addEventListener('click', () => {
           logoutModal.classList.remove('active');
         });
+
+        
+window.addEventListener("load", function () {
+  const mobileAuthControl = document.getElementById('mobileAuthControl');
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+
+  if (window.innerWidth <= 768) {
+    if (token && userId) {
+      // show icon
+if (mobileAuthControl) {
+  mobileAuthControl.innerHTML = `
+    <a href="./profile.html" style="
+      padding: 10px 30px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-top: 20px;
+      text-decoration: none;
+      font-size: 22px;
+      color: white;
+      transition: 0.3s;
+    " onmouseover="this.style.backgroundColor='rgba(19, 125, 59, 0.95)'" 
+       onmouseout="this.style.backgroundColor=''">
+      <img src="./assets/img/iconizer-Profile.svg" alt="Profile" style="margin-right: 10px;">
+      Profile
+    </a>
+  `;
+  mobileAuthControl.style.display = 'flex';
+}
+
+
+    } else {
+      // show register button
+      if (mobileAuthControl) {
+        mobileAuthControl.innerHTML = `
+          <button class="sidebar-button" onclick="document.location='mobile_sing.html'">Qeydiyyatdan keç</button>
+        `;
+        mobileAuthControl.style.display = 'flex';
+      }
+    }
+  }
+});
+        
+function openNav() {
+// Open the sidebar and overlay
+document.getElementById("mySidebar").classList.add("open");
+document.getElementById("overlaytus").classList.add("show");
+
+// Disable scrolling by setting the body's and html's overflow to 'hidden'
+document.body.style.overflow = 'hidden';
+document.documentElement.style.overflow = 'hidden'; // This ensures scrolling is disabled for the entire document
+}
+
+function closeNav() {
+// Close the sidebar and overlay
+document.getElementById("mySidebar").classList.remove("open");
+document.getElementById("overlaytus").classList.remove("show");
+
+// Re-enable scrolling by restoring the body's and html's overflow property
+document.body.style.overflow = '';
+document.documentElement.style.overflow = ''; // This restores the default scrolling behavior
+}
+
+const languageBtn = document.querySelector('.language-btn');
+const languageDropdown = document.querySelector('.language-dropdown');
+const arrowIcon = document.querySelector('.arrow-icon'); // выбираем стрелку
+
+languageBtn.addEventListener('click', () => {
+languageDropdown.classList.toggle('open');
+arrowIcon.classList.toggle('rotated'); // переключаем класс для поворота
+});
+
+
       </script>
       
         

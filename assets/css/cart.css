@@ -949,11 +949,12 @@ footer {
         background: transparent;
         backdrop-filter: none;
         box-shadow: none;
-        /* border: 2px solid red; */
         margin: 0 auto !important;
         justify-content: space-between;
         backdrop-filter: blur(7.699999809265137px);
         position: fixed;
+        padding: 20px !important;
+        margin-left: 10px !important;
     }
 
     .sidebar {
@@ -972,6 +973,7 @@ footer {
         display: none !important;
     }
 }
+
 
 
 @media (max-width: 480px) {
@@ -1243,4 +1245,43 @@ footer {
     background-color: #F07E26;
     margin: 15px;
   }
+}
+
+@media (min-width: 1024px) and (max-width: 1024px) {
+
+    .recommendation_box_cards {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+        .card_recommendation {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 260px !important;
+            height: 304px;
+            border: 1px solid #F6F6F6;
+            box-shadow: 0px 0px 40px 0px #C0C0C01F;
+            border-radius: 12px;
+            border-width: 1px;
+            padding: 12px;
+
+
+            button {
+                width: 236px !important;
+                height: 40px;
+                border-radius: 12px;
+                padding: 10px;
+                border: 1px solid #F07E26;
+                background-color: transparent;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 100%;
+                letter-spacing: 0%;
+                color: #F07E26;
+                cursor: pointer;
+            }
+        }
 }

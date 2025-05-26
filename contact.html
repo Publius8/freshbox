@@ -264,39 +264,7 @@
             <button class="openbtn" onclick="openNav()">☰</button>
     
         </nav>
-        <script>
-    function openNav() {
-      // Open the sidebar and overlay
-      document.getElementById("mySidebar").classList.add("open");
-      document.getElementById("overlaytus").classList.add("show");
-    
-      // Disable scrolling by setting the body's and html's overflow to 'hidden'
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden'; // This ensures scrolling is disabled for the entire document
-    }
-    
-    function closeNav() {
-      // Close the sidebar and overlay
-      document.getElementById("mySidebar").classList.remove("open");
-      document.getElementById("overlaytus").classList.remove("show");
-    
-      // Re-enable scrolling by restoring the body's and html's overflow property
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = ''; // This restores the default scrolling behavior
-    }
-    
-    const languageBtn = document.querySelector('.language-btn');
-    const languageDropdown = document.querySelector('.language-dropdown');
-    const arrowIcon = document.querySelector('.arrow-icon'); // выбираем стрелку
-    
-    languageBtn.addEventListener('click', () => {
-        languageDropdown.classList.toggle('open');
-        arrowIcon.classList.toggle('rotated'); // переключаем класс для поворота
-    });
-    
-    
-        </script>
-        
+
         <div id="overlay"></div>
     
         <div id="popUP"  data-aos="zoom-in-up">
@@ -500,19 +468,78 @@ function switchForm(formType) {
 }
 
 
-window.addEventListener("load", function() {
-      if (window.innerWidth <= 768) {
-        const mobileAuthControl = document.getElementById('mobileAuthControl');
+window.addEventListener("load", function () {
+  const mobileAuthControl = document.getElementById('mobileAuthControl');
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+
+  if (window.innerWidth <= 768) {
+    if (token && userId) {
+      // show icon
 if (mobileAuthControl) {
   mobileAuthControl.innerHTML = `
-    <a href="./profile.html">
-      <img src="./assets/img/Profile.png" alt="Profile">
+    <a href="./profile.html" style="
+      padding: 10px 30px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-top: 20px;
+      text-decoration: none;
+      font-size: 22px;
+      color: white;
+      transition: 0.3s;
+    " onmouseover="this.style.backgroundColor='rgba(19, 125, 59, 0.95)'" 
+       onmouseout="this.style.backgroundColor=''">
+      <img src="./assets/img/iconizer-Profile.svg" alt="Profile" style="margin-right: 10px;">
+      Profile
     </a>
   `;
+  mobileAuthControl.style.display = 'flex';
 }
+    } else {
+      // show register button
+      if (mobileAuthControl) {
+        mobileAuthControl.innerHTML = `
+          <button class="sidebar-button" onclick="document.location='mobile_sing.html'">Qeydiyyatdan keç</button>
+        `;
+        mobileAuthControl.style.display = 'flex';
+      }
+    }
   }
-
 });
+
+
+
+    function openNav() {
+      // Open the sidebar and overlay
+      document.getElementById("mySidebar").classList.add("open");
+      document.getElementById("overlaytus").classList.add("show");
+    
+      // Disable scrolling by setting the body's and html's overflow to 'hidden'
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden'; // This ensures scrolling is disabled for the entire document
+    }
+    
+    function closeNav() {
+      // Close the sidebar and overlay
+      document.getElementById("mySidebar").classList.remove("open");
+      document.getElementById("overlaytus").classList.remove("show");
+    
+      // Re-enable scrolling by restoring the body's and html's overflow property
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = ''; // This restores the default scrolling behavior
+    }
+    
+    const languageBtn = document.querySelector('.language-btn');
+    const languageDropdown = document.querySelector('.language-dropdown');
+    const arrowIcon = document.querySelector('.arrow-icon'); // выбираем стрелку
+    
+    languageBtn.addEventListener('click', () => {
+        languageDropdown.classList.toggle('open');
+        arrowIcon.classList.toggle('rotated'); // переключаем класс для поворота
+    });
+    
+    
       </script>
 </body>
 </html>

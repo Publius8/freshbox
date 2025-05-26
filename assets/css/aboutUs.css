@@ -898,6 +898,8 @@ footer {
         justify-content: space-between;
         backdrop-filter: blur(7.699999809265137px);
         position: fixed;
+        padding: 20px !important;
+        margin-left: 10px !important;
     }
 
     .sidebar {
@@ -915,11 +917,8 @@ footer {
     .othercontrols {
         display: none !important;
     }
-
-    .main {
-        padding: 20px;
-    }
 }
+
 
 
 @media (max-width: 480px) {

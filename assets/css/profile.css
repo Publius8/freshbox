@@ -864,6 +864,9 @@ body {
         margin: 0 auto !important;
         justify-content: space-between;
         backdrop-filter: blur(7.699999809265137px);
+        position: fixed;
+        padding: 20px !important;
+        margin-left: 10px !important;
     }
 
     .sidebar {
@@ -882,6 +885,7 @@ body {
         display: none !important;
     }
 }
+
 
 
 @media (max-width: 480px) {

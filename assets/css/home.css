@@ -636,7 +636,7 @@ header {
     }
     
     p {
-        color: #D5D5D5;
+        color: white;
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
@@ -979,6 +979,10 @@ footer {
 
     .textHeadButton h1 {
         font-size: 28px;
+/* 
+        span {
+            font-size: 20px !important;
+        } */
     }
 
     .textHeadButton p {
@@ -991,6 +995,29 @@ footer {
     }
 }
 
+
+@media (max-width: 768px) {
+    
+    .textHeadButton h1 {
+        font-size: 28px;
+
+        span {
+            font-size: 25px !important;
+        }
+    }
+}
+
+
+@media (max-width: 480px) {
+    
+    .textHeadButton h1 {
+        font-size: 28px;
+
+        span {
+            font-size: 20px !important;
+        }
+    }
+}
 
 
 @media (max-width: 480px) {
@@ -1089,6 +1116,8 @@ footer {
         justify-content: space-between;
         backdrop-filter: blur(7.699999809265137px);
         position: fixed;
+        padding: 20px !important;
+        margin-left: 10px !important;
     }
 
     .sidebar {
@@ -1184,6 +1213,28 @@ footer {
         flex-direction: column; 
         margin-top: 60px; 
         gap: 40px; 
+    }
+
+    .aboutCard {
+        gap: 10px; 
+    }
+
+    p {
+        font-size: 14px; 
+        padding: 0 10px; 
+    }
+
+    h2 {
+        font-size: 18px; 
+    }
+}
+
+  @media (min-width: 1024px) and (max-width: 1024px) {
+    .about {
+        flex-direction: row; 
+        margin-top: 60px; 
+        gap: 40px; 
+        max-width: 100% !important;
     }
 
     .aboutCard {
@@ -1303,6 +1354,10 @@ footer {
     }
 }
 
+
+
+
+
 @media (max-width: 768px) {
     .sizeForCardsAndMore {
         max-width: 100% !important;
@@ -1328,7 +1383,33 @@ footer {
         z-index: 1 !important;
     }
 }
+@media (min-width: 1024px) and (max-width: 1024px) {
+    .sizeForCardsAndMore {
+        max-width: 100% !important;
+    }
 
+    .positionOfCardsRow {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 10px !important; 
+        justify-content: center;
+    }
+
+    .bestProducts {
+        width: 100%;
+        height: auto;
+        justify-content: center;
+        padding: 0 !important;
+        margin: 0 !important;
+        margin-top: 50px !important;
+    }
+
+    .productCards {
+        position: relative;
+        z-index: 1 !important;
+    }
+}
 /* productCards
 positionOfCardsRow
 sizeForCardsAndMore */
+
