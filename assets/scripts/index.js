@@ -203,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  
   // === Logout Modal ===
   const logoutModal = document.getElementById("logoutModal");
   const confirmLogoutBtn = document.getElementById("confirmLogout");
@@ -231,6 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.location.href = "./index.html";
   });
+
+
 
   // === Helpers ===
   function saveAuthState(data) {
@@ -268,9 +271,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
 
+
   
 // PASS CHANGE START
-
    const passwordMessage = document.getElementById('passwordMessage');
   // form elementi (düzgün işləməsi üçün əlavə et)
   const passwordForm = document.getElementById('passwordForm');
@@ -353,116 +356,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // PASS CHANGE FINISH
 
 
-// cart script
-document.addEventListener('DOMContentLoaded', () => {
-  const addToCartForm = document.getElementById('add-to-cart-form');
-  const quantityInput = document.getElementById('numberInput');
-  const productId = document.getElementById('put_name_here').dataset.productId;
-  const userId = localStorage.getItem('user_id');
 
-  if (!userId) {
-    alert('Пользователь не авторизован');
-    return;
-  }
 
-  // add to cart
-  addToCartForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const quantity = parseInt(quantityInput.value, 10);
 
-    try {
-      const response = await fetch('https://api.fresback.squanta.az/api/cart/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          product_id: productId,
-          quantity: quantity,
-          user_id: userId
-        })
-      });
 
-      if (!response.ok) {
-        throw new Error('Ошибка при добавлении товара в корзину');
-      }
 
-      const result = await response.json();
-      alert('Товар успешно добавлен в корзину!');
-      await loadCart(); 
-    } catch (error) {
-      console.error(error);
-      alert('Ошибка при добавлении товара');
-    }
-  });
 
-  // buttons + and -
-  window.changeValue = (delta) => {
-    let currentValue = parseInt(quantityInput.value, 10);
-    if (isNaN(currentValue)) currentValue = 1;
-    currentValue += delta;
-    if (currentValue < 1) currentValue = 1;
-    quantityInput.value = currentValue;
-  };
-
-  // cart download
-  async function loadCart() {
-    try {
-      const response = await fetch(`https://api.fresback.squanta.az/api/cart?user_id=${userId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Error');
-      }
-
-      const cartData = await response.json();
-      const purchasesList = document.querySelector('.purchases-list');
-      purchasesList.innerHTML = '';
-
-      const totalPriceElement = document.getElementById('put_total_here');
-
-      if (!cartData.items || cartData.items.length === 0) {
-        purchasesList.innerHTML = '<p>Empty</p>';
-        totalPriceElement.textContent = '0 AZN';
-        return;
-      }
-
-      cartData.items.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.classList.add('cart-item');
-        itemElement.innerHTML = `
-          <div class="image-name-weight">
-            <div class="image-box">
-              <img src="${item.image_url}" alt="${item.title}">
-            </div>
-            <div class="text-box">
-              <h3>${item.title}</h3>
-              <span>${item.weight}</span>
-            </div>
-          </div>
-          <div class="quatity-of-products">
-            <span>${item.quantity}</span>
-          </div>
-          <div class="put_price_here">
-            <span>${item.price} AZN</span>
-          </div>
-        `;
-        purchasesList.appendChild(itemElement);
-      });
-
-      totalPriceElement.textContent = `${cartData.total_price} AZN`;
-    } catch (error) {
-      console.error(error);
-      alert('Error');
-    }
-  }
-
-  loadCart();
-});
 
 
 });
