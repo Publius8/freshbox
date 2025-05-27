@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="./assets_admin/css/style.css">
+     
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>Admin Dashboard Panel</title>
+</head>
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+               <img src="./assets_admin/img/logo.png" alt="">
+            </div>
+            <span class="logo_name">FreshBox</span>
+        </div>
+        <div class="menu-items">
+                <ul class="nav-links">
+                    <li><a href="#" data-target="dashboard">
+                        <i class="uil uil-estate"></i>
+                        <span class="link-name">Dashboard</span>
+                    </a></li>
+                    <li><a href="#" data-target="products">
+                        <i class="uil uil-files-landscapes"></i>
+                        <span class="link-name">Məhsullar</span>
+                    </a></li>
+                    <li><a href="#" data-target="users">
+                        <i class="uil uil-chart"></i>
+                        <span class="link-name">İstifadəçilər</span>
+                    </a></li>
+                    <li><a href="#" data-target="payments">
+                        <i class="uil uil-thumbs-up"></i>
+                        <span class="link-name">Odənişlər</span>
+                    </a></li>
+                    <li><a href="#" data-target="categories">
+                        <i class="uil uil-comments"></i>
+                        <span class="link-name">Kategoriyalar</span>
+                    </a></li>
+                </ul>
+
+            
+            <ul class="logout-mode">
+                <li><a href="login_to_admin.html">
+                    <i class="uil uil-signout"></i>
+                    <span class="link-name">Logout</span>
+                </a></li>
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                    <span class="link-name">Dark Mode</span>
+                </a>
+                <div class="mode-toggle">
+                  <span class="switch"></span>
+                </div>
+            </li>
+            </ul>
+        </div>
+    </nav>
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+            <!-- <div class="search-box">
+                <i class="uil uil-search"></i>
+                <input type="text" placeholder="Search here...">
+            </div> -->
+            
+            <img src="./assets_admin/img/c80b069b0f6f76a9f44fffc43c81b19d.jpg" alt="">
+        </div>
+<div class="dash-content">
+    <div id="dashboard" class="content-tab active">
+                    <div class="overview">
+                <div class="title">
+                    <i class="uil uil-tachometer-fast-alt"></i>
+                    <span class="text">Dashboard</span>
+                </div>
+                <div class="boxes">
+                    <div class="box box1">
+                        <i class="uil uil-thumbs-up"></i>
+                        <span class="text">Total Likes</span>
+                        <span class="number">50,120</span>
+                    </div>
+                    <div class="box box2">
+                        <i class="uil uil-comments"></i>
+                        <span class="text">Comments</span>
+                        <span class="number">20,120</span>
+                    </div>
+                    <div class="box box3">
+                        <i class="uil uil-share"></i>
+                        <span class="text">Total Share</span>
+                        <span class="number">10,120</span>
+                    </div>
+                </div>
+            </div>
+            <div class="activity">
+                <div class="title">
+                    <i class="uil uil-clock-three"></i>
+                    <span class="text">Recent Activity</span>
+                </div>
+                <div class="activity-data">
+                    <div class="data names">
+                        <span class="data-title">Name</span>
+                        <span class="data-list">Prem Shahi</span>
+                    </div>
+                    <div class="data email">
+                        <span class="data-title">Email</span>
+                        <span class="data-list">premshahi@gmail.com</span>
+                    </div>
+                    <div class="data joined">
+                        <span class="data-title">Joined</span>
+                        <span class="data-list">2022-02-12</span>
+                    </div>
+                    <div class="data type">
+                        <span class="data-title">Type</span>
+                        <span class="data-list">New</span>
+                    </div>
+                    <div class="data status">
+                        <span class="data-title">Status</span>
+                        <span class="data-list">Liked</span>
+                    </div>
+                </div>
+            </div>
+    </div>
+<div id="products" class="content-tab">
+  <h2>Məhsullar</h2>
+  <button id="add-product-btn" style="margin-bottom: 15px;">Yeni Məhsul</button>
+
+  <table border="1" cellspacing="0" cellpadding="10">
+    <thead class="darker">
+      <tr>
+        <th>ID</th>
+        <th>Başlıq</th>
+        <th>Açıqlama</th>
+        <th>Qiymət</th>
+        <th>Stok</th>
+        <th>Endirim</th>
+        <th>Çəki</th>
+        <th>Say</th>
+        <th>Litrlə</th>
+        <th>Miqdar</th>
+        <th>Kateqoriya ID</th>
+        <th>Şəkil</th>
+        <th>Əməliyyatlar</th>
+      </tr>
+    </thead>
+    <tbody id="product-body"></tbody>
+  </table>
+</div>
+
+<div id="users" class="content-tab">
+  <h2>İstifadəçilər</h2>
+  <table border="1" cellspacing="0" cellpadding="10">
+    <thead class="darker">
+      <tr>
+        <th>ID</th>
+        <th>Ad Soyad</th>
+        <th>Email</th>
+        <th>Telefon</th>
+        <th>Ünvan</th>
+        <th>Profil şəkli</th>
+      </tr>
+    </thead>
+    <tbody id="user-body"></tbody>
+  </table>
+</div>
+
+<div id="payments" class="content-tab">
+  <h2>Ödənişlər</h2>
+  <table border="1" cellspacing="0" cellpadding="10">
+    <thead class="darker">
+      <tr>
+        <th>ID</th>
+        <th>İstifadəçi</th>
+        <th>Email</th>
+        <th>Məbləğ</th>
+        <th>Tarix</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="payment-body"></tbody>
+  </table>
+</div>
+
+
+<div id="categories" class="content-tab">
+  <h2>Kategoriyalar</h2>
+  <button id="add-category-btn" style="margin-bottom: 15px;">Yeni Kateqoriya</button>
+
+  <table border="1" cellspacing="0" cellpadding="10">
+    <thead class="darker">
+      <tr>
+        <th>ID</th>
+        <th>Adı</th>
+        <th>Təsviri</th>
+        <th>Məhsul sayı</th>
+        <th>Əməliyyatlar</th>
+      </tr>
+    </thead>
+    <tbody id="category-body"></tbody>
+  </table>
+</div>
+
+
+</div>
+
+    </section>
+
+    <div id="product-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" id="close-modal">&times;</span>
+    <h3>Yeni Məhsul Əlavə Et</h3>
+    <form id="product-form">
+      <input type="text" id="title" placeholder="Başlıq" required>
+      <input type="text" id="description" placeholder="Açıqlama" required>
+      <input type="number" id="price" placeholder="Qiymət" step="0.01" required>
+      <input type="number" id="stock" placeholder="Stok" required>
+      <input type="number" id="discount" placeholder="Endirim" required>
+      <input type="text" id="weight" placeholder="Çəki" required>
+      <input type="number" id="number" placeholder="Say" required>
+      <input type="text" id="liter" placeholder="Litrlə" required>
+      <input type="number" id="quantity" placeholder="Miqdar" required>
+      <input type="number" id="category_id" placeholder="Kateqoriya ID" required>
+      <input type="url" id="image" placeholder="Şəkil URL-si" required>
+      <button type="submit" class="submit-btn">Əlavə et</button>
+    </form>
+  </div>
+</div>
+
+
+<div id="category-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" id="close-category-modal">&times;</span>
+    <h3>Yeni Kateqoriya Əlavə Et</h3>
+    <form id="category-form">
+      <input type="text" id="category-name" placeholder="Kateqoriya adı" required>
+      <input type="text" id="category-description" placeholder="Təsviri" required>
+      <input type="number" id="category-product-count" placeholder="Məhsul sayı" required>
+      <button type="submit" class="submit-btn">Əlavə et</button>
+    </form>
+  </div>
+</div>
+
+    <script src="./assets_admin/js/script.js"></script>
+</body>
+</html>
