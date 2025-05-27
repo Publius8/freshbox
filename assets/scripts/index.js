@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // === Вход ===
+  // Giriş
   loginFormAction?.addEventListener('submit', async (e) => {
     e.preventDefault();
     // loginMessage.textContent = '';
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // === Проверка входа при загрузке ===
+  // Check the enter
    token = localStorage.getItem('token');
    userId = localStorage.getItem('userId');
 
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
     replaceAuthButton();
   }
 
-  // === Заполнение профиля при загрузке ===
+  // fill the profile
   const nameInput = document.getElementById('profileName');
   const emailInput = document.getElementById('profileEmail');
   const phoneInput = document.getElementById('profilePhone');
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (phoneInput && phone) phoneInput.value = phone;
   if (addressInput && address) addressInput.value = address;
 
-  // === PROFILE UPDATE ===
+  // profile update
   const profileUpdateForm = document.getElementById('profileUpdateForm');
   const profileUpdateMessage = document.getElementById('profileUpdateMessage');
 
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // === Helpers ===
+  // helpers
   function saveAuthState(data) {
     localStorage.setItem('token', data.token);
     localStorage.setItem('userId', data.user.id);
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showSuccess(message) {
-    alert(message); // Можно заменить на toast
+    alert(message); 
   }
 
   function hidePopup() {
