@@ -8,7 +8,7 @@ async function fetchFavorites() {
   }
 
   try {
-    const favResponse = await fetch(`http://localhost:3000/api/fave/${userId}`, {
+    const favResponse = await fetch(`https://api.fresback.squanta.az/api/fave/${userId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ async function fetchFavorites() {
         <div class="products-container" data-id="${item.id}">
           <div class="imgae-circle">
             <div class="image-container">
-              <img style="width:20px" src="http://localhost:3000/uploads/product/${item.image}" alt="${item.title}">
+              <img style="width:20px" src="https://api.fresback.squanta.az/uploads/product/${item.image}" alt="${item.title}">
             </div>
             <div class="favourite-circle" data-id="${item.id}" style="cursor:pointer;">
               <img src="./assets/img/orangeHerz.svg" alt="fav-icon">
@@ -91,7 +91,7 @@ async function removeFavourite(productId, productCardElement) {
   }
 
   try {
-    const res = await fetch('http://localhost:3000/api/fave/delete', {
+    const res = await fetch('https://api.fresback.squanta.az/api/fave/delete', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

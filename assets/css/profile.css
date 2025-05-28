@@ -947,3 +947,173 @@ body {
     }
   }
   
+
+  .favourites-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.products-container {
+  width: 280px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s;
+}
+
+.products-container:hover {
+  transform: translateY(-5px);
+}
+
+.imgae-circle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.image-container img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 50%;
+  background-color: #f9f9f9;
+}
+
+.favourite-circle {
+  width: 36px;
+  height: 36px;
+  background-color: #fff0e0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.favourite-circle:hover {
+  background-color: #ffd8b0;
+}
+
+.name-weight h3 {
+  font-size: 16px;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.name-weight span {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.stock-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  margin: 6px 0;
+}
+
+.price span {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ff6600;
+}
+
+.products-container button {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.products-container button:hover {
+  background-color: #e65500;
+}
+
+/* ✅ Адаптивность */
+@media (max-width: 768px) {
+  .products-container {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  .image-container img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .favourite-circle {
+    width: 30px;
+    height: 30px;
+  }
+
+  .name-weight h3 {
+    font-size: 15px;
+  }
+
+  .name-weight span {
+    font-size: 13px;
+  }
+
+  .price span {
+    font-size: 16px;
+  }
+
+  .products-container button {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .favourites-box {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .products-container {
+    padding: 12px;
+  }
+
+  .image-container img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .favourite-circle {
+    width: 26px;
+    height: 26px;
+  }
+
+  .name-weight h3 {
+    font-size: 14px;
+  }
+
+  .name-weight span {
+    font-size: 12px;
+  }
+
+  .price span {
+    font-size: 15px;
+  }
+
+  .products-container button {
+    font-size: 13px;
+    padding: 7px;
+  }
+}

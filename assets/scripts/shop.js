@@ -1,27 +1,51 @@
-  // AOS инциализация
-AOS.init();
-
-// Modal popup funksiyaları
 let modalPage = document.getElementById("modalPage");
 let popUP = document.getElementById("popUP");
 let overlay = document.getElementById("overlay");
 let closeBtn = document.getElementById("closeBtn");
+function openNav() {
+    // Open the sidebar and overlay
+    document.getElementById("mySidebar").classList.add("open");
+    document.getElementById("overlaytus").classList.add("show");
+
+    // Disable scrolling by setting the body's and html's overflow to 'hidden'
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden'; // This ensures scrolling is disabled for the entire document
+}
+
+function closeNav() {
+    // Close the sidebar and overlay
+    document.getElementById("mySidebar").classList.remove("open");
+    document.getElementById("overlaytus").classList.remove("show");
+
+    // Re-enable scrolling by restoring the body's and html's overflow property
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = ''; // This restores the default scrolling behavior
+}
+
+const languageBtn = document.querySelector('.language-btn');
+const languageDropdown = document.querySelector('.language-dropdown');
+const arrowIcon = document.querySelector('.arrow-icon'); // выбираем стрелку
+
+languageBtn.addEventListener('click', () => {
+    languageDropdown.classList.toggle('open');
+    arrowIcon.classList.toggle('rotated'); // переключаем класс для поворота
+});
 
 function openPopup() {
-  popUP.classList.remove("hide-popup");
-  popUP.classList.add("show-popup");
-  popUP.style.visibility = "visible";
-  overlay.classList.add("active-overlay");
-  AOS.refresh();
+    popUP.classList.remove("hide-popup");
+    popUP.classList.add("show-popup");
+    popUP.style.visibility = "visible";
+    overlay.classList.add("active-overlay");
+    AOS.refresh();
 }
 
 function closePopup() {
-  popUP.classList.remove("show-popup");
-  popUP.classList.add("hide-popup");
-  overlay.classList.remove("active-overlay");
-  setTimeout(() => {
-    popUP.style.visibility = "hidden";
-  }, 300);
+    popUP.classList.remove("show-popup");
+    popUP.classList.add("hide-popup");
+    overlay.classList.remove("active-overlay");
+    setTimeout(() => {
+        popUP.style.visibility = "hidden";
+    }, 300);
 }
 
 modalPage.addEventListener("click", openPopup);
@@ -29,72 +53,72 @@ closeBtn.addEventListener("click", closePopup);
 
 // Form switch funksiyası
 function switchForm(formType) {
-  const buttons = document.querySelectorAll('.switchButtons button');
-  buttons.forEach(button => {
-    button.classList.remove('active');
-    button.style.opacity = 0.6;
-  });
+    const buttons = document.querySelectorAll('.switchButtons button');
+    buttons.forEach(button => {
+        button.classList.remove('active');
+        button.style.opacity = 0.6;
+    });
 
-  const loginForm = document.getElementById('loginForm');
-  const registerForm = document.getElementById('registerForm');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
 
-  if (formType === 'login') {
-    document.querySelector('.switchButtons button:first-child').classList.add('active');
-    document.querySelector('.switchButtons button:first-child').style.opacity = 1;
+    if (formType === 'login') {
+        document.querySelector('.switchButtons button:first-child').classList.add('active');
+        document.querySelector('.switchButtons button:first-child').style.opacity = 1;
 
-    if (registerForm.style.display === 'block') {
-      registerForm.style.transition = "opacity 0.5s ease-in-out";
-      registerForm.style.opacity = 0;
-      setTimeout(() => {
-        registerForm.style.display = 'none';
-      }, 500);
+        if (registerForm.style.display === 'block') {
+            registerForm.style.transition = "opacity 0.5s ease-in-out";
+            registerForm.style.opacity = 0;
+            setTimeout(() => {
+                registerForm.style.display = 'none';
+            }, 500);
+        }
+
+        setTimeout(() => {
+            loginForm.style.display = 'block';
+            loginForm.style.transition = "opacity 0.5s ease-in-out";
+            loginForm.style.opacity = 1;
+        }, 500);
+
+    } else {
+        document.querySelector('.switchButtons button:last-child').classList.add('active');
+        document.querySelector('.switchButtons button:last-child').style.opacity = 1;
+
+        if (loginForm.style.display === 'block') {
+            loginForm.style.transition = "opacity 0.5s ease-in-out";
+            loginForm.style.opacity = 0;
+            setTimeout(() => {
+                loginForm.style.display = 'none';
+            }, 500);
+        }
+
+        setTimeout(() => {
+            registerForm.style.display = 'block';
+            registerForm.style.transition = "opacity 0.5s ease-in-out";
+            registerForm.style.opacity = 1;
+        }, 500);
     }
-
-    setTimeout(() => {
-      loginForm.style.display = 'block';
-      loginForm.style.transition = "opacity 0.5s ease-in-out";
-      loginForm.style.opacity = 1;
-    }, 500);
-
-  } else {
-    document.querySelector('.switchButtons button:last-child').classList.add('active');
-    document.querySelector('.switchButtons button:last-child').style.opacity = 1;
-
-    if (loginForm.style.display === 'block') {
-      loginForm.style.transition = "opacity 0.5s ease-in-out";
-      loginForm.style.opacity = 0;
-      setTimeout(() => {
-        loginForm.style.display = 'none';
-      }, 500);
-    }
-
-    setTimeout(() => {
-      registerForm.style.display = 'block';
-      registerForm.style.transition = "opacity 0.5s ease-in-out";
-      registerForm.style.opacity = 1;
-    }, 500);
-  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const toggleBtn = document.querySelector(".dropdown-toggle-mobile");
-  const filterBar = document.querySelector(".filter-left-bar");
+    const toggleBtn = document.querySelector(".dropdown-toggle-mobile");
+    const filterBar = document.querySelector(".filter-left-bar");
 
-  toggleBtn.addEventListener("click", function () {
-    filterBar.classList.toggle("active");
-  });
+    toggleBtn.addEventListener("click", function () {
+        filterBar.classList.toggle("active");
+    });
 });
 
 window.addEventListener("load", function () {
-  const mobileAuthControl = document.getElementById('mobileAuthControl');
-  const token = localStorage.getItem('token');
-  const userId = localStorage.getItem('userId');
+    const mobileAuthControl = document.getElementById('mobileAuthControl');
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
 
-  if (window.innerWidth <= 768) {
-    if (token && userId) {
-      // show icon
-if (mobileAuthControl) {
-  mobileAuthControl.innerHTML = `
+    if (window.innerWidth <= 768) {
+        if (token && userId) {
+            // show icon
+            if (mobileAuthControl) {
+                mobileAuthControl.innerHTML = `
     <a href="./profile.html" style="
       padding: 10px 30px;
       display: flex;
@@ -111,61 +135,61 @@ if (mobileAuthControl) {
       Profile
     </a>
   `;
-  mobileAuthControl.style.display = 'flex';
-}
-    } else {
-      // show register button
-      if (mobileAuthControl) {
-        mobileAuthControl.innerHTML = `
+                mobileAuthControl.style.display = 'flex';
+            }
+        } else {
+            // show register button
+            if (mobileAuthControl) {
+                mobileAuthControl.innerHTML = `
           <button class="sidebar-button" onclick="document.location='mobile_sing.html'">Qeydiyyatdan keç</button>
         `;
-        mobileAuthControl.style.display = 'flex';
-      }
+                mobileAuthControl.style.display = 'flex';
+            }
+        }
     }
-  }
 });
 
 // Toast mesaj göstərmək üçün funksiya
 function showToast(message, isError = false) {
-  const toast = document.createElement('div');
-  toast.textContent = message;
-  toast.style.position = 'fixed';
-  toast.style.bottom = '20px';
-  toast.style.left = '50%';
-  toast.style.transform = 'translateX(-50%)';
-  toast.style.padding = '10px 20px';
-  toast.style.backgroundColor = isError ? 'red' : 'green';
-  toast.style.color = 'white';
-  toast.style.borderRadius = '5px';
-  toast.style.zIndex = '9999';
-  toast.style.fontSize = '14px';
-  toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
-  document.body.appendChild(toast);
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.style.position = 'fixed';
+    toast.style.bottom = '20px';
+    toast.style.left = '50%';
+    toast.style.transform = 'translateX(-50%)';
+    toast.style.padding = '10px 20px';
+    toast.style.backgroundColor = isError ? 'red' : 'green';
+    toast.style.color = 'white';
+    toast.style.borderRadius = '5px';
+    toast.style.zIndex = '9999';
+    toast.style.fontSize = '14px';
+    toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+    document.body.appendChild(toast);
 
-  setTimeout(() => {
-    toast.remove();
-  }, 2000);
+    setTimeout(() => {
+        toast.remove();
+    }, 2000);
 }
 
 // Məhsulları yüklə və siyahını göstər
 async function loadProducts() {
-  try {
-    const res = await fetch('https://api.fresback.squanta.az/api/product/all');
-    const products = await res.json();
+    try {
+        const res = await fetch('https://api.fresback.squanta.az/api/product/all');
+        const products = await res.json();
 
-    const container = document.getElementById('productList');
-    container.innerHTML = ''; // təmizlə
+        const container = document.getElementById('productList');
+        container.innerHTML = ''; // təmizlə
 
-    products.forEach(product => {
-      const productCard = document.createElement('div');
-      productCard.className = 'products-card';
-      productCard.dataset.id = product.id;
-      productCard.dataset.fav = product.fav || '0';
+        products.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'products-card';
+            productCard.dataset.id = product.id;
+            productCard.dataset.fav = product.fav || '0';
 
-      productCard.innerHTML = `
+            productCard.innerHTML = `
         <div class="imgae-circle">
           <div class="image-container">
-            <img src="https://api.fresback.squanta.az/api/product/${product.image}" alt="${product.title}">
+            <img src="https://api.fresback.squanta.az/uploads/product/${product.image}" alt="${product.title}">
           </div>
           <div class="favourite-circle" data-id="${product.id}" data-fav="${product.fav === 1 ? '1' : '0'}">
             <img src="${product.fav === 1 ? './assets/img/orangeHerz.svg' : './assets/img/heart.png'}" alt="fav-icon">
@@ -174,19 +198,18 @@ async function loadProducts() {
         <div class="name-weight">
           <h3>${product.title}</h3>
           <span class="stock-status">
-            ${
-              product.stock === 1
-                ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            ${product.stock === 1
+                    ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                      <circle cx="12" cy="12" r="10" fill="#4CAF50"/>
                      <path d="M7 13l3 3 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                    </svg>
                    Stokda var`
-                : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                      <circle cx="12" cy="12" r="10" fill="#F44336"/>
                      <path d="M15 9l-6 6M9 9l6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                    </svg>
                    Stokda yoxdur`
-            }
+                }
           </span>
           <span>${product.quantity > 0 ? product.quantity + ' ədəd' : ''}</span>
           <span>${product.weight > 0 ? product.weight + " kg" : ""}</span>
@@ -200,131 +223,197 @@ async function loadProducts() {
         </div>
       `;
 
-      // productCard-ə klik dinləyici əlavə etməkdənsə, yalnız favourite-circle üçün əlavə edirik
+            // productCard-ə klik dinləyici əlavə etməkdənsə, yalnız favourite-circle üçün əlavə edirik
 
-      container.appendChild(productCard);
-    });
+            container.appendChild(productCard);
+        });
 
-    attachFavListeners();
+        attachFavListeners();
 
-  } catch (error) {
-    console.error('Xəta:', error);
-  }
+    } catch (error) {
+        console.error('Xəta:', error);
+    }
 }
 
 // Ürək ikonuna klik dinləyicisi əlavə et
 function attachFavListeners() {
-  document.querySelectorAll(".favourite-circle").forEach(circle => {
-    circle.addEventListener("click", async (e) => {
-      e.stopPropagation(); // klik eventini məhsul kartına yayılmasın
+    document.querySelectorAll(".favourite-circle").forEach(circle => {
+        circle.addEventListener("click", async (e) => {
+            e.stopPropagation(); // klik eventini məhsul kartına yayılmasın
 
-      const productCardElement = e.currentTarget.closest('.products-card');
-      const productId = e.currentTarget.getAttribute("data-id");
+            const productCardElement = e.currentTarget.closest('.products-card');
+            const productId = e.currentTarget.getAttribute("data-id");
 
-      if (productCardElement && productId) {
-        await toggleFavourite(productId, productCardElement, e.currentTarget);
-      }
+            if (productCardElement && productId) {
+                await toggleFavourite(productId, productCardElement, e.currentTarget);
+            }
+        });
     });
-  });
 }
 
 // Sevimliyə əlavə/silmə funksiyası
 async function toggleFavourite(productId, productCardElement, favCircleElement) {
-  const token = localStorage.getItem('token');
-  const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
 
-  if (!token || !userId) {
-    showToast("Zəhmət olmasa, əvvəlcə hesabınıza daxil olun", true);
-    return;
-  }
-
-  let isFaved = favCircleElement.dataset.fav === "1";
-
-  try {
-    if (isFaved) {
-      // Sevimlərdən sil
-      const res = await fetch('https://api.fresback.squanta.az/api/fave/delete', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          product_id: productId
-        }),
-      });
-
-      if (!res.ok) throw new Error('Xəta baş verdi');
-
-      productCardElement.dataset.fav = "0";
-      favCircleElement.dataset.fav = "0";
-      favCircleElement.querySelector("img").src = "./assets/img/heart.png";
-
-      showToast("Sevimlərdən silindi");
-
-    } else {
-      // Sevimlərə əlavə et
-      const res = await fetch('https://api.fresback.squanta.az/api/fave/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          product_id: productId
-        }),
-      });
-
-      if (res.status === 201) {
-        productCardElement.dataset.fav = "1";
-        favCircleElement.dataset.fav = "1";
-        favCircleElement.querySelector("img").src = "./assets/img/orangeHerz.svg";
-
-        showToast("Sevimlərə əlavə edildi");
-      } else if (res.status === 409) {
-        const data = await res.json();
-        showToast(data.error || "Məhsul artıq sevimlilərdə var", true);
-      } else {
-        throw new Error('Xəta baş verdi');
-      }
+    if (!token || !userId) {
+        showToast("Zəhmət olmasa, əvvəlcə hesabınıza daxil olun", true);
+        return;
     }
-  } catch (err) {
-    console.error("Sevimlər xətası:", err);
-    showToast("Xəta baş verdi", true);
-  }
+
+    let isFaved = favCircleElement.dataset.fav === "1";
+
+    try {
+        if (isFaved) {
+            // Sevimlərdən sil
+            const res = await fetch('https://api.fresback.squanta.az/api/fave/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    user_id: userId,
+                    product_id: productId
+                }),
+            });
+
+            if (!res.ok) throw new Error('Xəta baş verdi');
+
+            productCardElement.dataset.fav = "0";
+            favCircleElement.dataset.fav = "0";
+            favCircleElement.querySelector("img").src = "./assets/img/heart.png";
+
+            showToast("Sevimlərdən silindi");
+
+        } else {
+            // Sevimlərə əlavə et
+            const res = await fetch('https://api.fresback.squanta.az/api/fave/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    user_id: userId,
+                    product_id: productId
+                }),
+            });
+
+            if (res.status === 201) {
+                productCardElement.dataset.fav = "1";
+                favCircleElement.dataset.fav = "1";
+                favCircleElement.querySelector("img").src = "./assets/img/orangeHerz.svg";
+
+                showToast("Sevimlərə əlavə edildi");
+            } else if (res.status === 409) {
+                const data = await res.json();
+                showToast(data.error || "Məhsul artıq sevimlilərdə var", true);
+            } else {
+                throw new Error('Xəta baş verdi');
+            }
+        }
+    } catch (err) {
+        console.error("Sevimlər xətası:", err);
+        showToast("Xəta baş verdi", true);
+    }
 }
 
 loadProducts();
 
 
-    function openNav() {
-      // Open the sidebar and overlay
-      document.getElementById("mySidebar").classList.add("open");
-      document.getElementById("overlaytus").classList.add("show");
-    
-      // Disable scrolling by setting the body's and html's overflow to 'hidden'
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden'; // This ensures scrolling is disabled for the entire document
+
+
+// Categorya\
+let categories = document.getElementById('categories');
+let selectedCategoryId = null; 
+
+async function loadCategory() {
+    try {
+        const res = await fetch('https://api.fresback.squanta.az/api/kategoriya/all');
+        const categories = await res.json();
+
+      
+        categories.innerHTML = ''; // təmizlə
+
+        // "Hamısı" seçimini əlavə et
+        const allItem = document.createElement('div');
+        allItem.className = 'category-item';
+        allItem.innerHTML = `
+            <input type="radio" name="category" id="catAll" checked>
+            <label for="catAll">Hamısı</label>
+        `;
+        allItem.addEventListener('click', () => {
+            selectedCategoryId = null;
+            loadProducts();
+        });
+        container.appendChild(allItem);
+
+        // Kateqoriyaları əlavə et
+        categories.forEach(category => {
+            const categoryItem = document.createElement('div');
+            categoryItem.className = 'category-item';
+            
+            categoryItem.innerHTML = `
+                <input type="radio" name="category" id="cat${category.id}">
+                <label for="cat${category.id}">${category.title}</label>
+            `;
+
+            categoryItem.addEventListener('click', () => {
+                selectedCategoryId = category.id;
+                loadProducts();
+            });
+
+            container.appendChild(categoryItem);
+        });
+
+    } catch (error) {
+        console.error('Xəta:', error);
     }
-    
-    function closeNav() {
-      // Close the sidebar and overlay
-      document.getElementById("mySidebar").classList.remove("open");
-      document.getElementById("overlaytus").classList.remove("show");
-    
-      // Re-enable scrolling by restoring the body's and html's overflow property
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = ''; // This restores the default scrolling behavior
+}
+
+async function loadCategory() {
+    try {
+        const categoriesData = await fetch('https://api.fresback.squanta.az/api/kategoriya/all').then(res => res.json());
+
+        categories.innerHTML = ''; // təmizlə
+
+        // "Hamısı" seçimini əlavə et
+        const allItem = document.createElement('div');
+        allItem.className = 'category-item';
+        allItem.innerHTML = `
+            <input type="radio" name="category" id="catAll" checked>
+            <label for="catAll">Hamısı</label>
+        `;
+        allItem.addEventListener('click', () => {
+            selectedCategoryId = null;
+            loadProducts();
+        });
+        categories.appendChild(allItem);
+
+        categoriesData.forEach(category => {
+            const categoryItem = document.createElement('div');
+            categoryItem.className = 'category-item';
+
+            categoryItem.innerHTML = `
+                <input type="radio" name="category" id="cat${category.id}">
+                <label for="cat${category.id}">${category.title}</label>
+            `;
+
+            categoryItem.addEventListener('click', () => {
+                selectedCategoryId = category.id;
+                loadProducts();
+            });
+
+            categories.appendChild(categoryItem);
+        });
+    } catch (error) {
+        console.error('Xəta:', error);
     }
-    
-    const languageBtn = document.querySelector('.language-btn');
-    const languageDropdown = document.querySelector('.language-dropdown');
-    const arrowIcon = document.querySelector('.arrow-icon'); // выбираем стрелку
-    
-    languageBtn.addEventListener('click', () => {
-        languageDropdown.classList.toggle('open');
-        arrowIcon.classList.toggle('rotated'); // переключаем класс для поворота
-    });
-    
+}
+
+// Səhifə yüklənəndə hər ikisini çağır
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadCategory();
+    loadProducts();
+});

@@ -297,14 +297,16 @@
                   <div class="head-favourites">
                     <h2>Profil məlumatları</h2>
                 </div>
-                    <div class="profileWrapper" style="margin-top: 20px;">
-                      <div class="profileImage">
-                        <img src="./assets/img/c80b069b0f6f76a9f44fffc43c81b19d.jpg" alt="profilePhoto" />
-                      </div>
-                      <div class="littleCircle">
-                        <img src="./assets/img/Edit Square.svg" alt="edit" />
-                      </div>
-                    </div>
+<div class="profileWrapper" style="margin-top: 20px;">
+  <div class="profileImage">
+    <img id="profilePhoto" src="./assets/img/no-profile-picture-icon.svg" alt="profilePhoto" />
+  </div>
+  <div class="littleCircle" id="editPhotoBtn">
+    <img src="./assets/img/Edit Square.svg" alt="edit" />
+  </div>
+  <input type="file" id="update_photo" name="photo" accept="image/*" style="display: none;" />
+</div>
+
                 
 <div class="form-wrapper">
   <form class="form-grid" id="profileUpdateForm">
@@ -573,6 +575,7 @@ languageBtn.addEventListener('click', () => {
 languageDropdown.classList.toggle('open');
 arrowIcon.classList.toggle('rotated'); // переключаем класс для поворота
 });
+
 
 
       </script>
