@@ -219,7 +219,8 @@ async function loadProducts() {
           <span>${product.price} man</span>
         </div>
         <div>
-          <button role="link" onclick="window.location.href='product-page.html';">İndi sifariş et</button>
+          <button role="link" onclick='goToProductPage(${JSON.stringify(product)})'>İndi sifariş et</button>
+
         </div>
       `;
 
@@ -318,6 +319,12 @@ async function toggleFavourite(productId, productCardElement, favCircleElement) 
         showToast("Xəta baş verdi", true);
     }
 }
+function goToProductPage(product) {
+    localStorage.setItem("selectedProduct", JSON.stringify(product));
+    const titleParam = encodeURIComponent(product.title);
+    window.location.href = `product-page.html?title=${titleParam}`;
+}
+
 
 loadProducts();
 

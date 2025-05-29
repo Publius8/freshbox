@@ -137,6 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const profileUpdateMessage = document.getElementById('profileUpdateMessage');
 
   if (profileUpdateForm && userId && token) {
+
+    
     loadProfileData(userId);
 
     profileUpdateForm.addEventListener('submit', async (e) => {
@@ -387,7 +389,6 @@ if (editPhotoBtn && updatePhotoInput) {
     const file = e.target.files[0];
     if (!file) return;
 
-    // Получаем token и userId внутри этой функции
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('user_id');
 
