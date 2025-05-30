@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  
   // === Вход ===
   loginFormAction?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -371,6 +372,10 @@ const editPhotoBtn = document.getElementById('editPhotoBtn');
 const updatePhotoInput = document.getElementById('update_photo');
 const profilePhoto = document.getElementById('profilePhoto');
 
+// Показать сохранённое фото
+const savedPhoto = localStorage.getItem('profile_img');
+if (savedPhoto) profilePhoto.src = savedPhoto;
+
 function displayProfilePhoto(profileImgUrl) {
   if (profileImgUrl) {
     profilePhoto.src = profileImgUrl;
@@ -389,9 +394,22 @@ if (editPhotoBtn && updatePhotoInput) {
     const file = e.target.files[0];
     if (!file) return;
 
+    // Проверка файла
+    const maxFileSizeMB = 5;
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+    if (!allowedTypes.includes(file.type)) {
+      return alert('Yalnız JPEG, PNG və ya WEBP şəkilləri yükləyə bilərsiniz.');
+    }
+
+    if (file.size > maxFileSizeMB * 1024 * 1024) {
+      return alert(`Şəkil ölçüsü maksimum ${maxFileSizeMB}MB olmalıdır.`);
+    }
+
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('user_id');
 
+    // Показываем предпросмотр
     const reader = new FileReader();
     reader.onload = function (event) {
       profilePhoto.src = event.target.result;
@@ -411,7 +429,6 @@ if (editPhotoBtn && updatePhotoInput) {
       });
 
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         alert('Profil şəkli uğurla yeniləndi!');
@@ -421,6 +438,7 @@ if (editPhotoBtn && updatePhotoInput) {
           localStorage.setItem('profile_img', image);
         }
       } else {
+        console.error('Server Error:', data);
         alert(data.error || 'Şəkil yüklənərkən xəta baş verdi.');
       }
     } catch (err) {

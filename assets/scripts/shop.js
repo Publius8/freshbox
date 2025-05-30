@@ -1,103 +1,6 @@
-let modalPage = document.getElementById("modalPage");
-let popUP = document.getElementById("popUP");
-let overlay = document.getElementById("overlay");
-let closeBtn = document.getElementById("closeBtn");
-function openNav() {
-    // Open the sidebar and overlay
-    document.getElementById("mySidebar").classList.add("open");
-    document.getElementById("overlaytus").classList.add("show");
-
-    // Disable scrolling by setting the body's and html's overflow to 'hidden'
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden'; // This ensures scrolling is disabled for the entire document
-}
-
-function closeNav() {
-    // Close the sidebar and overlay
-    document.getElementById("mySidebar").classList.remove("open");
-    document.getElementById("overlaytus").classList.remove("show");
-
-    // Re-enable scrolling by restoring the body's and html's overflow property
-    document.body.style.overflow = '';
-    document.documentElement.style.overflow = ''; // This restores the default scrolling behavior
-}
-
-const languageBtn = document.querySelector('.language-btn');
-const languageDropdown = document.querySelector('.language-dropdown');
-const arrowIcon = document.querySelector('.arrow-icon'); // выбираем стрелку
-
-languageBtn.addEventListener('click', () => {
-    languageDropdown.classList.toggle('open');
-    arrowIcon.classList.toggle('rotated'); // переключаем класс для поворота
-});
-
-function openPopup() {
-    popUP.classList.remove("hide-popup");
-    popUP.classList.add("show-popup");
-    popUP.style.visibility = "visible";
-    overlay.classList.add("active-overlay");
-    AOS.refresh();
-}
-
-function closePopup() {
-    popUP.classList.remove("show-popup");
-    popUP.classList.add("hide-popup");
-    overlay.classList.remove("active-overlay");
-    setTimeout(() => {
-        popUP.style.visibility = "hidden";
-    }, 300);
-}
-
-modalPage.addEventListener("click", openPopup);
-closeBtn.addEventListener("click", closePopup);
-
-// Form switch funksiyası
-function switchForm(formType) {
-    const buttons = document.querySelectorAll('.switchButtons button');
-    buttons.forEach(button => {
-        button.classList.remove('active');
-        button.style.opacity = 0.6;
-    });
-
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-
-    if (formType === 'login') {
-        document.querySelector('.switchButtons button:first-child').classList.add('active');
-        document.querySelector('.switchButtons button:first-child').style.opacity = 1;
-
-        if (registerForm.style.display === 'block') {
-            registerForm.style.transition = "opacity 0.5s ease-in-out";
-            registerForm.style.opacity = 0;
-            setTimeout(() => {
-                registerForm.style.display = 'none';
-            }, 500);
-        }
-
-        setTimeout(() => {
-            loginForm.style.display = 'block';
-            loginForm.style.transition = "opacity 0.5s ease-in-out";
-            loginForm.style.opacity = 1;
-        }, 500);
-
-    } else {
-        document.querySelector('.switchButtons button:last-child').classList.add('active');
-        document.querySelector('.switchButtons button:last-child').style.opacity = 1;
-
-        if (loginForm.style.display === 'block') {
-            loginForm.style.transition = "opacity 0.5s ease-in-out";
-            loginForm.style.opacity = 0;
-            setTimeout(() => {
-                loginForm.style.display = 'none';
-            }, 500);
-        }
-
-        setTimeout(() => {
-            registerForm.style.display = 'block';
-            registerForm.style.transition = "opacity 0.5s ease-in-out";
-            registerForm.style.opacity = 1;
-        }, 500);
-    }
+function getCategoryTitleFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('categoryTitle');
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -170,23 +73,17 @@ function showToast(message, isError = false) {
         toast.remove();
     }, 2000);
 }
+function displayProducts(products) {
+    const container = document.getElementById('productList');
+    container.innerHTML = ''; // təmizlə
 
-// Məhsulları yüklə və siyahını göstər
-async function loadProducts() {
-    try {
-        const res = await fetch('https://api.fresback.squanta.az/api/product/all');
-        const products = await res.json();
+    products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'products-card';
+        productCard.dataset.id = product.id;
+        productCard.dataset.fav = product.fav || '0';
 
-        const container = document.getElementById('productList');
-        container.innerHTML = ''; // təmizlə
-
-        products.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.className = 'products-card';
-            productCard.dataset.id = product.id;
-            productCard.dataset.fav = product.fav || '0';
-
-            productCard.innerHTML = `
+        productCard.innerHTML = `
         <div class="imgae-circle">
           <div class="image-container">
             <img src="https://api.fresback.squanta.az/uploads/product/${product.image}" alt="${product.title}">
@@ -199,17 +96,8 @@ async function loadProducts() {
           <h3>${product.title}</h3>
           <span class="stock-status">
             ${product.stock === 1
-                    ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                     <circle cx="12" cy="12" r="10" fill="#4CAF50"/>
-                     <path d="M7 13l3 3 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                   </svg>
-                   Stokda var`
-                    : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                     <circle cx="12" cy="12" r="10" fill="#F44336"/>
-                     <path d="M15 9l-6 6M9 9l6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                   </svg>
-                   Stokda yoxdur`
-                }
+                ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#4CAF50"/><path d="M7 13l3 3 7-7" stroke="white" stroke-width="2"/></svg> Stokda var`
+                : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F44336"/><path d="M15 9l-6 6M9 9l6 6" stroke="white" stroke-width="2"/></svg> Stokda yoxdur`}
           </span>
           <span>${product.quantity > 0 ? product.quantity + ' ədəd' : ''}</span>
           <span>${product.weight > 0 ? product.weight + " kg" : ""}</span>
@@ -220,21 +108,94 @@ async function loadProducts() {
         </div>
         <div>
           <button role="link" onclick='goToProductPage(${JSON.stringify(product)})'>İndi sifariş et</button>
-
         </div>
       `;
 
-            // productCard-ə klik dinləyici əlavə etməkdənsə, yalnız favourite-circle üçün əlavə edirik
+        container.appendChild(productCard);
+    });
 
-            container.appendChild(productCard);
-        });
+    document.getElementById('quatity-of-products').textContent = `${products.length} məhsul`;
+    attachFavListeners();
+}
 
-        attachFavListeners();
+// Məhsulları yüklə və siyahını göstər
+async function loadProducts() {
+    try {
+        const res = await fetch('https://api.fresback.squanta.az/api/product/all');
+        const products = await res.json();
 
+        displayProducts(products);
+        document.getElementById('quatity-of-products').textContent = `${products.length} məhsul`;
+    } catch (error) {
+        console.error('Xəta məhsulları yükləyərkən:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadProducts(); // Загрузка при открытии страницы
+});
+
+document.querySelector('.custom-dropdown select').addEventListener('change', async function () {
+    const selectedValue = this.value;
+    try {
+        const res = await fetch('https://api.fresback.squanta.az/api/product/all');
+        let products = await res.json();
+
+        // Сортировка
+        switch (selectedValue) {
+            case 'azdan-coxa':
+                products.sort((a, b) => a.price - b.price);
+                break;
+            case 'coxdan-aza':
+                products.sort((a, b) => b.price - a.price);
+                break;
+            case 'yeniler':
+                products.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                break;
+            case 'endirim':
+                products = products.filter(product => product.discount_price > 0);
+                break;
+        }
+
+        displayProducts(products);
+        document.getElementById('quatity-of-products').textContent = `${products.length} məhsul`;
     } catch (error) {
         console.error('Xəta:', error);
     }
-}
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadProducts(); // <- теперь при первой загрузке всё отобразится
+});
+
+
+document.querySelector('.custom-dropdown select').addEventListener('change', async function () {
+    const selectedValue = this.value;
+    try {
+        const res = await fetch('https://api.fresback.squanta.az/api/product/all');
+        let products = await res.json();
+
+        // Сортировка
+        switch (selectedValue) {
+            case 'azdan-coxa':
+                products.sort((a, b) => a.price - b.price);
+                break;
+            case 'coxdan-aza':
+                products.sort((a, b) => b.price - a.price);
+                break;
+            case 'yeniler':
+                products.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                break;
+            case 'endirim':
+                products = products.filter(product => product.discount_price > 0);
+                break;
+        }
+
+        displayProducts(products); // вызываем отрисовку
+    } catch (error) {
+        console.error('Xəta:', error);
+    }
+});
 
 // Ürək ikonuna klik dinləyicisi əlavə et
 function attachFavListeners() {
@@ -258,67 +219,45 @@ async function toggleFavourite(productId, productCardElement, favCircleElement) 
     const userId = localStorage.getItem('userId');
 
     if (!token || !userId) {
-        showToast("Zəhmət olmasa, əvvəlcə hesabınıza daxil olun", true);
+        showToast("Zəhmət olmasa daxil olun", true);
         return;
     }
 
-    let isFaved = favCircleElement.dataset.fav === "1";
-
     try {
-        if (isFaved) {
-            // Sevimlərdən sil
-            const res = await fetch('https://api.fresback.squanta.az/api/fave/delete', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    user_id: userId,
-                    product_id: productId
-                }),
-            });
+        const isFav = favCircleElement.getAttribute("data-fav") === "1";
+        const url = `https://api.fresback.squanta.az/api/favourite/${isFav ? 'remove' : 'add'}`;
+        const method = isFav ? 'DELETE' : 'POST';
 
-            if (!res.ok) throw new Error('Xəta baş verdi');
+        const res = await fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                user_id: userId
+            })
+        });
 
-            productCardElement.dataset.fav = "0";
-            favCircleElement.dataset.fav = "0";
-            favCircleElement.querySelector("img").src = "./assets/img/heart.png";
+        if (res.ok) {
+            // Toggle the icon and data-fav value
+            const isNowFav = !isFav;
+            favCircleElement.setAttribute("data-fav", isNowFav ? "1" : "0");
+            favCircleElement.querySelector('img').src = isNowFav
+                ? './assets/img/orangeHerz.svg'
+                : './assets/img/heart.png';
 
-            showToast("Sevimlərdən silindi");
-
+            showToast(isNowFav ? "Sevimlilərə əlavə olundu" : "Sevimlilərdən silindi");
         } else {
-            // Sevimlərə əlavə et
-            const res = await fetch('https://api.fresback.squanta.az/api/fave/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    user_id: userId,
-                    product_id: productId
-                }),
-            });
-
-            if (res.status === 201) {
-                productCardElement.dataset.fav = "1";
-                favCircleElement.dataset.fav = "1";
-                favCircleElement.querySelector("img").src = "./assets/img/orangeHerz.svg";
-
-                showToast("Sevimlərə əlavə edildi");
-            } else if (res.status === 409) {
-                const data = await res.json();
-                showToast(data.error || "Məhsul artıq sevimlilərdə var", true);
-            } else {
-                throw new Error('Xəta baş verdi');
-            }
+            throw new Error("Server error");
         }
-    } catch (err) {
-        console.error("Sevimlər xətası:", err);
+    } catch (error) {
+        console.error('Sevimliyə əlavə etmə xətası:', error);
         showToast("Xəta baş verdi", true);
     }
 }
+
 function goToProductPage(product) {
     localStorage.setItem("selectedProduct", JSON.stringify(product));
     const titleParam = encodeURIComponent(product.title);
@@ -384,12 +323,13 @@ async function loadCategory() {
         const categoriesData = await fetch('https://api.fresback.squanta.az/api/kategoriya/all').then(res => res.json());
 
         categories.innerHTML = ''; // təmizlə
+        const selectedCategoryTitle = getCategoryTitleFromURL();
 
-        // "Hamısı" seçimini əlavə et
+        // "Hamısı" seçimi
         const allItem = document.createElement('div');
         allItem.className = 'category-item';
         allItem.innerHTML = `
-            <input type="radio" name="category" id="catAll" checked>
+            <input type="radio" name="category" id="catAll" ${!selectedCategoryTitle ? 'checked' : ''}>
             <label for="catAll">Hamısı</label>
         `;
         allItem.addEventListener('click', () => {
@@ -399,11 +339,12 @@ async function loadCategory() {
         categories.appendChild(allItem);
 
         categoriesData.forEach(category => {
+            const isSelected = category.title === selectedCategoryTitle;
             const categoryItem = document.createElement('div');
             categoryItem.className = 'category-item';
 
             categoryItem.innerHTML = `
-                <input type="radio" name="category" id="cat${category.id}">
+                <input type="radio" name="category" id="cat${category.id}" ${isSelected ? 'checked' : ''}>
                 <label for="cat${category.id}">${category.title}</label>
             `;
 
@@ -413,11 +354,20 @@ async function loadCategory() {
             });
 
             categories.appendChild(categoryItem);
+
+            // Если это выбранная категория — загружаем товары
+            if (isSelected) {
+                selectedCategoryId = category.id;
+            }
         });
+
+        loadProducts();
+
     } catch (error) {
         console.error('Xəta:', error);
     }
 }
+
 
 // Səhifə yüklənəndə hər ikisini çağır
 document.addEventListener('DOMContentLoaded', async () => {
