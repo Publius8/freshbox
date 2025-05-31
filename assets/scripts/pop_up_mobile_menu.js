@@ -25,10 +25,10 @@
      }
 
      // Открытие окна
-     modalPage.addEventListener("click", openPopup);
+    //  modalPage.addEventListener("click", openPopup);
 
      // Закрытие окна только при клике на крестик
-     closeBtn.addEventListener("click", closePopup);
+    //  closeBtn.addEventListener("click", closePopup);
 
 
 

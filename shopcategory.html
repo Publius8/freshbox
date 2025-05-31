@@ -154,79 +154,15 @@
         
       </header>
 
-      <div class="size">
-        <div class="page-part">
-            <p><a href="./index.html">Ana səhifə</a> <span>/</span> </p>
-            <p>Mağaza <span>/</span> <h5>Meyvə</h5></p>
-        </div>
+             <div class="products-container" id="productList">
 
-        <div class="main">
-            <div class="left-bar">
-                <div class="word-search">
-                    <div class="title-with-line">İndi axtar</div>
-                    <div class="search-box">
-                        <input type="text" placeholder="Axtar">
-                        <button class="orange-circle"><img src="./assets/img/Search_White.svg" alt="seacrWhite"></button>
-                    </div>
-                </div>
-
-                  
-                <div class="filter-dropdown-mobile">
-                    <button class="dropdown-toggle-mobile">📂 Kateqoriyalar</button>
-                  
-                    <div class="filter-left-bar">
-                      <div class="title-with-line">Kateqoriyalar</div>
-                      <div id="categories" class="categories">
-                  
-                      </div>
-                    </div>
-                  </div>
-                  
-
-                  
-                  
-            </div>
-            <div class="right-bar">
-                <div class="filter-right-bar">
-                    <div><span id="quatity-of-products">26 məhsul</span></div>
-                    <div class="custom-dropdown">
-                        <select>
-                          <option value="azdan-coxa" selected>Azdan çoxa</option>
-                          <option value="coxdan-aza">Çoxdan aza</option>
-                          <option value="yeniler">Yenilər</option>
-                          <option value="endirim">Endirimlilər</option>
-                        </select>
-                      </div>
-                      
-                </div>
-                <div class="products-container" id="productList">
-<!-- <div class="products-card" data-id="123" data-fav="1">
-  <div class="imgae-circle">
-    <div class="image-container">
-      <img src="./assets/img/7683c493753f0d78fecbe07dc26b0e8b.png" alt="productImage">
-    </div>
-    <div class="favourite-circle" data-id="123" data-fav="1">
-      <img src="./assets/img/orangeHerz.svg" alt="orangeHerz">
-    </div>
-  </div>
-  <div class="name-weight">
-    <h3>Greyfruit</h3>
-    <span>1 kg</span>
-  </div>
-  <div class="price">
-    <span>2.90 man</span>
-  </div>
-  <div>
-    <button role="link" onclick="window.location.href='product-page.html';">İndi sifariş et</button>
-  </div>
-</div> -->
 
                 
 
                         
                 </div>
-            </div>
-        </div>
+            
+        </div> 
       </div>
       <footer>
         <div class="footerLogoText">
@@ -253,16 +189,138 @@
             <span>Freshbox©agentliyi 2025dən bəri. Bütün hüquqlar qorunur.</span>
         </div>
 
-            <script src="./assets/scripts/index.js"></script>
+            <!-- <script src="./assets/scripts/index.js"></script> -->
             <script src="./assets/scripts/aboutUs.js"></script>
-            <script src="./assets/scripts/shop.js"></script>
+            <!-- <script src="./assets/scripts/shop.js"></script> -->
 <script>
 AOS.init();
 
 
 </script>
 
+<script>
+// URL-dən categoryTitle oxuyan funksiya
+function getCategoryTitleFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('categoryTitle');
+}
 
+function showToast(message, isError = false) {
+  // (sənin verdiyin showToast funksiyası)
+}
+
+// Məhsulları göstərmək üçün funksiya
+function displayProducts(products) {
+  const container = document.getElementById('productList');
+  if (!container) {
+    console.error("productList elementi tapılmadı");
+    return;
+  }
+  container.innerHTML = '';
+
+  products.forEach(product => {
+    const productCardHTML = `
+      <div class="products-card" data-id="${product.id}" data-fav="${product.fav || '0'}">
+        <div class="imgae-circle">
+          <div class="image-container">
+            <img src="https://api.fresback.squanta.az/uploads/product/${product.image}" alt="${product.title}">
+          </div>
+          <div class="favourite-circle" data-id="${product.id}" data-fav="${product.fav === 1 ? '1' : '0'}">
+            <img src="${product.fav === 1 ? './assets/img/orangeHerz.svg' : './assets/img/heart.png'}" alt="fav-icon">
+          </div>
+        </div>
+        <div class="name-weight">
+          <h3>${product.title}</h3>
+          <span class="stock-status">
+            ${product.stock === 1
+              ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#4CAF50"/><path d="M7 13l3 3 7-7" stroke="white" stroke-width="2"/></svg> Stokda var`
+              : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F44336"/><path d="M15 9l-6 6M9 9l6 6" stroke="white" stroke-width="2"/></svg> Stokda yoxdur`}
+          </span>
+          <span>${product.quantity > 0 ? product.quantity + ' ədəd' : ''}</span>
+          <span>${product.weight > 0 ? product.weight + " kg" : ""}</span>
+          <span>${product.liter > 0 ? product.liter + " l" : ""}</span>
+        </div>
+        <div class="price">
+          <span>${product.price} man</span>
+        </div>
+        <div>
+          <button role="link" class="order-btn" data-product='${encodeURIComponent(JSON.stringify(product))}'>İndi sifariş et</button>
+        </div>
+      </div>
+    `;
+
+    container.insertAdjacentHTML('beforeend', productCardHTML);
+  });
+
+  // İndi düymələrə dinləyici əlavə et
+  container.querySelectorAll('.order-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const productData = decodeURIComponent(e.currentTarget.getAttribute('data-product'));
+      const product = JSON.parse(productData);
+      goToProductPage(product);
+    });
+  });
+
+  attachFavListeners();
+}
+
+async function loadProducts() {
+  try {
+    const categoryTitle = getCategoryTitleFromURL();
+    console.log("URL categoryTitle:", categoryTitle);
+
+    const res = await fetch('https://api.fresback.squanta.az/api/product/all');
+    if (!res.ok) throw new Error('Məhsullar yüklənə bilmədi');
+    let products = await res.json();
+
+    console.log('Gelen products:', products);
+
+    if (categoryTitle) {
+      const normalizedCategoryTitle = categoryTitle.toLowerCase().trim();
+      products = products.filter(p => p.category_title && p.category_title.toLowerCase().trim() === normalizedCategoryTitle);
+    }
+
+    console.log("Filtrlənmiş məhsullar:", products);
+
+    displayProducts(products);
+
+    const quantityElem = document.getElementById('quatity-of-products');
+    if (quantityElem) {
+      quantityElem.textContent = `${products.length} məhsul`;
+    }
+  } catch (error) {
+    console.error(error);
+    const container = document.getElementById('productList');
+    if(container) container.innerHTML = '<p>Məhsullar yüklənərkən xəta baş verdi.</p>';
+  }
+}
+
+function goToProductPage(product) {
+  localStorage.setItem("selectedProduct", JSON.stringify(product));
+  const titleParam = encodeURIComponent(product.title);
+  window.location.href = `product-page.html?title=${titleParam}`;
+}
+
+function attachFavListeners() {
+  document.querySelectorAll(".favourite-circle").forEach(circle => {
+    circle.addEventListener("click", async (e) => {
+      e.stopPropagation();
+
+      const productCardElement = e.currentTarget.closest('.products-card');
+      const productId = e.currentTarget.getAttribute("data-id");
+
+      if (productCardElement && productId) {
+        await toggleFavourite(productId, productCardElement, e.currentTarget);
+      }
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadProducts();
+});
+
+</script>
 
 </body>
 </html>

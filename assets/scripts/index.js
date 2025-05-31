@@ -1,247 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const registerFormAction = document.getElementById('registerFormAction');
+  // ELEMENTLƏR
+  const registerForm = document.getElementById('registerFormAction');
   const registerMessage = document.getElementById('registerMessage');
-  const loginFormAction = document.getElementById('loginFormAction');
-  // const loginMessage = document.getElementById('loginMessage');
+  const loginForm = document.getElementById('loginFormAction');
+  // const loginMessage = document.getElementById('loginMessage'); // lazım olarsa aç
   const authButtons = document.querySelector('.auth-buttons');
   const userIcon = document.querySelector('.user-icon');
 
-  let userId = "";
-  let token = "";
-
-
-  // === Регистрация ===
-  registerFormAction?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    registerMessage.textContent = '';
-    registerMessage.className = 'message';
-
-    const full_name = registerFormAction.full_name.value.trim();
-    const email = registerFormAction.email.value.trim();
-    const password = registerFormAction.password.value;
-
-    if (!full_name || !email || !password) {
-      registerMessage.textContent = 'Пожалуйста, заполните все поля.';
-      registerMessage.classList.add('error');
-      return;
-    }
-
-    if (password.length < 8) {
-      registerMessage.textContent = 'Пароль должен содержать минимум 8 символов.';
-      registerMessage.classList.add('error');
-      return;
-    }
-
-    try {
-      const res = await fetch('https://api.fresback.squanta.az/api/user/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ full_name, email, password }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        showSuccess(`Добро пожаловать, ${data.user.full_name}!`);
-        registerFormAction.reset();
-        saveAuthState(data);
-        replaceAuthButton();
-        hidePopup();
-
-        if (window.innerWidth <= 768) {
-          window.location.href = './index.html';
-        }
-      } else {
-        registerMessage.textContent = data.error || 'Произошла ошибка.';
-        registerMessage.classList.add('error');
-      }
-    } catch (err) {
-      registerMessage.textContent = 'Не удалось подключиться к серверу.';
-      registerMessage.classList.add('error');
-      console.error(err);
-    }
-  });
-
-  
-  // === Вход ===
-  loginFormAction?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    // loginMessage.textContent = '';
-    // loginMessage.className = 'message';
-
-    const email = loginFormAction.email.value.trim();
-    const password = loginFormAction.password.value;
-
-    // if (!email || !password) {
-    //   loginMessage.textContent = 'Пожалуйста, введите email и пароль.';
-    //   loginMessage.classList.add('error');
-    //   return;
-    // }
-
-    try {
-      const res = await fetch('https://api.fresback.squanta.az/api/user/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        showSuccess(`Добро пожаловать, ${data.user.full_name}!`);
-        loginFormAction.reset();
-        saveAuthState(data);
-        replaceAuthButton();
-        hidePopup();
-
-        if (window.innerWidth <= 768) {
-          window.location.href = './index.html';
-        }
-      } else {
-        // ВЫВОД СООБЩЕНИЯ ЕСЛИ НЕВЕРНЫЙ EMAIL ИЛИ ПАРОЛЬ
-        // loginMessage.textContent = data.error || 'Неверный email или пароль.';
-        // loginMessage.classList.add('error');
-      }
-    } catch (err) {
-      // loginMessage.textContent = 'Ошибка подключения к серверу.';
-      // loginMessage.classList.add('error');
-      // console.error(err);
-    }
-  });
-
-  // === Проверка входа при загрузке ===
-   token = localStorage.getItem('token');
-   userId = localStorage.getItem('userId');
-
-  if (token && userId) {
-    replaceAuthButton();
-  }
-
-  // === Заполнение профиля при загрузке ===
-  const nameInput = document.getElementById('profileName');
-  const emailInput = document.getElementById('profileEmail');
-  const phoneInput = document.getElementById('profilePhone');
-  const addressInput = document.getElementById('profileAddress');
-
-  const fullName = localStorage.getItem('fullName');
-  const email = localStorage.getItem('email');
-  const phone = localStorage.getItem('phone');
-  const address = localStorage.getItem('address');
-
-  if (nameInput && fullName) nameInput.value = fullName;
-  if (emailInput && email) emailInput.value = email;
-  if (phoneInput && phone) phoneInput.value = phone;
-  if (addressInput && address) addressInput.value = address;
-
-  // === PROFILE UPDATE ===
   const profileUpdateForm = document.getElementById('profileUpdateForm');
   const profileUpdateMessage = document.getElementById('profileUpdateMessage');
 
-  if (profileUpdateForm && userId && token) {
+  const editPhotoBtn = document.getElementById('editPhotoBtn');
+  const updatePhotoInput = document.getElementById('update_photo');
+  const profilePhoto = document.getElementById('profilePhoto');
 
-    
-    loadProfileData(userId);
+  const passwordForm = document.getElementById('passwordForm');
+  const passwordMessage = document.getElementById('passwordMessage');
+  const changePassBtn = document.getElementById('change-pass');
 
-    profileUpdateForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      profileUpdateMessage.textContent = '';
-      profileUpdateMessage.className = 'message';
+  // LOCAL STORAGE-DƏN İSTİFADƏÇİ MƏLUMATLARI
+  let token = localStorage.getItem('token') || "";
+  let userId = localStorage.getItem('userId') || "";
 
-      const updateData = {
-        full_name: profileUpdateForm.full_name.value.trim(),
-        phone: profileUpdateForm.phone.value.trim(),
-        email: profileUpdateForm.email.value.trim(),
-        address: profileUpdateForm.address.value.trim(),
-      };
+  // ==== FUNKSİYALAR ==== //
 
-      try {
-        const res = await fetch(`https://api.fresback.squanta.az/api/user/profile/${userId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify(updateData),
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-          profileUpdateMessage.textContent = 'Profil məlumatları uğurla yeniləndi!';
-          profileUpdateMessage.classList.remove('error');
-          profileUpdateMessage.classList.add('success');
-        } else {
-          profileUpdateMessage.textContent = data.error || 'Xəta baş verdi.';
-          profileUpdateMessage.classList.add('error');
-        }
-      } catch (err) {
-        profileUpdateMessage.textContent = 'Serverə qoşulmaq mümkün olmadı.';
-        profileUpdateMessage.classList.add('error');
-        console.error(err);
-      }
-    });
+  function showMessage(element, message, isError = false) {
+    if (!element) return;
+    element.textContent = message;
+    element.className = isError ? 'error' : 'success';
   }
 
-async function loadProfileData(userId) {
-  try {
-    const res = await fetch(`https://api.fresback.squanta.az/api/user/with-profiles/${userId}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
-
-    if (!res.ok) throw new Error('Profil məlumatları gətirilə bilmədi.');
-
-    const profileData = await res.json();
-
-    document.getElementById('update_full_name').value = profileData.full_name || '';
-    document.getElementById('update_email').value = profileData.email || '';
-    document.getElementById('update_phone').value = profileData.phone || '';
-    document.getElementById('update_address').value = profileData.address || '';
-
-    displayProfilePhoto(profileData.profile_img);
-  } catch (err) {
-    if (profileUpdateMessage) {
-      profileUpdateMessage.textContent = err.message;
-      profileUpdateMessage.classList.add('error');
-    }
+  function showSuccess(message) {
+    alert(message); // İstəyə görə Toast və ya modal ola bilər
   }
-}
 
-
-  
-  // === Logout Modal ===
-  const logoutModal = document.getElementById("logoutModal");
-  const confirmLogoutBtn = document.getElementById("confirmLogout");
-  const cancelLogoutBtn = document.getElementById("cancelLogout");
-
-  window.showLogoutModal = function () {
-    logoutModal.style.display = "flex";
-  };
-
-  cancelLogoutBtn?.addEventListener("click", () => {
-    logoutModal.style.display = "none";
-  });
-
-  confirmLogoutBtn?.addEventListener("click", () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("fullName");
-    localStorage.removeItem("email");
-    localStorage.removeItem("phone");
-    localStorage.removeItem("address");
-
-    logoutModal.style.display = "none";
-
-    if (authButtons) authButtons.style.display = "flex";
-    if (userIcon) userIcon.style.display = "none";
-
-    window.location.href = "./index.html";
-  });
-
-
-
-  // === Helpers ===
   function saveAuthState(data) {
     localStorage.setItem('token', data.token);
     localStorage.setItem('userId', data.user.id);
@@ -260,13 +52,8 @@ async function loadProfileData(userId) {
         </a>
       `;
     }
-
     if (authButtons) authButtons.style.display = 'none';
     if (userIcon) userIcon.style.display = 'flex';
-  }
-
-  function showSuccess(message) {
-    alert(message); // Можно заменить на toast
   }
 
   function hidePopup() {
@@ -275,35 +62,221 @@ async function loadProfileData(userId) {
     if (popup) popup.style.display = 'none';
     if (overlay) overlay.style.display = 'none';
   }
-  
 
+  function displayProfilePhoto(url) {
+    if (url) {
+      profilePhoto.src = url;
+      localStorage.setItem('profile_img', url);
+    } else {
+      profilePhoto.src = './assets/img/no-profile-picture-icon.svg';
+      localStorage.removeItem('profile_img');
+    }
+  }
 
-  
-// PASS CHANGE START
-   const passwordMessage = document.getElementById('passwordMessage');
-  // form elementi (düzgün işləməsi üçün əlavə et)
-  const passwordForm = document.getElementById('passwordForm');
+  // ==== SESİYON VARSA BUTTONLARI YENİLƏ ==== //
+  if (token && userId) {
+    replaceAuthButton();
+  }
 
-  // Mesaj göstərmə funksiyası
+  // ==== REGISTER FORM HANDLER ==== //
+  registerForm?.addEventListener('submit', async e => {
+    e.preventDefault();
+    registerMessage.textContent = '';
+    registerMessage.className = 'message';
+
+    const full_name = registerForm.full_name.value.trim();
+    const email = registerForm.email.value.trim();
+    const password = registerForm.password.value;
+
+    if (!full_name || !email || !password) {
+      showMessage(registerMessage, 'Пожалуйста, заполните все поля.', true);
+      return;
+    }
+
+    if (password.length < 8) {
+      showMessage(registerMessage, 'Пароль должен содержать минимум 8 символов.', true);
+      return;
+    }
+
+    try {
+      const res = await fetch('https://api.fresback.squanta.az/api/user/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ full_name, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        showSuccess(`Добро пожаловать, ${data.user.full_name}!`);
+        registerForm.reset();
+        saveAuthState(data);
+        replaceAuthButton();
+        hidePopup();
+        if (window.innerWidth <= 768) window.location.href = './index.html';
+      } else {
+        showMessage(registerMessage, data.error || 'Произошла ошибка.', true);
+      }
+    } catch {
+      showMessage(registerMessage, 'Не удалось подключиться к серверу.', true);
+    }
+  });
+
+  // ==== LOGIN FORM HANDLER ==== //
+  loginForm?.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const email = loginForm.email.value.trim();
+    const password = loginForm.password.value;
+
+    try {
+      const res = await fetch('https://api.fresback.squanta.az/api/user/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        showSuccess(`Добро пожаловать, ${data.user.full_name}!`);
+        loginForm.reset();
+        saveAuthState(data);
+        replaceAuthButton();
+        hidePopup();
+        if (window.innerWidth <= 768) window.location.href = './index.html';
+      } else {
+        // Lazım olsa login mesajı göstərə bilərsən
+      }
+    } catch {
+      // Lazım olsa server error mesajı göstərə bilərsən
+    }
+  });
+
+  // ==== PROFİL MƏLUMATLARINI YÜKLƏ ==== //
+  async function loadProfileData(userId) {
+    try {
+      const res = await fetch(`https://api.fresback.squanta.az/api/user/with-profiles/${userId}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error('Profil məlumatları gətirilə bilmədi.');
+      const data = await res.json();
+
+      document.getElementById('update_full_name').value = data.full_name || '';
+      document.getElementById('update_email').value = data.email || '';
+      document.getElementById('update_phone').value = data.phone || '';
+      document.getElementById('update_address').value = data.address || '';
+
+      displayProfilePhoto(data.profl_img_url || data.profile_img_url || data.profile_img);
+    } catch (err) {
+      showMessage(profileUpdateMessage, err.message, true);
+    }
+  }
+
+  if (profileUpdateForm && token && userId) {
+    loadProfileData(userId);
+
+    // Şəkil seçimi önizləmə (submit göndərmir)
+    editPhotoBtn?.addEventListener('click', () => updatePhotoInput.click());
+
+    updatePhotoInput?.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const maxFileSizeMB = 5;
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+      if (!allowedTypes.includes(file.type)) {
+        alert('Yalnız JPEG, PNG və ya WEBP şəkilləri yükləyə bilərsiniz.');
+        updatePhotoInput.value = '';
+        return;
+      }
+      if (file.size > maxFileSizeMB * 1024 * 1024) {
+        alert(`Şəkil ölçüsü maksimum ${maxFileSizeMB}MB olmalıdır.`);
+        updatePhotoInput.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        profilePhoto.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // FORM SUBMIT (şəkil + digər sahələr)
+    profileUpdateForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      profileUpdateMessage.textContent = '';
+      profileUpdateMessage.className = 'message';
+
+      try {
+        const formData = new FormData(profileUpdateForm);
+
+        if (updatePhotoInput.files.length > 0) {
+          formData.append('profl_img', updatePhotoInput.files[0]);
+        }
+
+        const res = await fetch(`https://api.fresback.squanta.az/api/user/profile/${userId}`, {
+          method: 'PUT',
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: formData,
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          showMessage(profileUpdateMessage, 'Profil məlumatları uğurla yeniləndi!');
+          if (data.user?.profl_img_url) {
+            displayProfilePhoto(data.user.profl_img_url);
+          }
+          updatePhotoInput.value = '';
+        } else {
+          showMessage(profileUpdateMessage, data.error || 'Xəta baş verdi.', true);
+        }
+      } catch {
+        showMessage(profileUpdateMessage, 'Serverə qoşulmaq mümkün olmadı.', true);
+      }
+    });
+  }
+
+  // ==== LOGOUT MODAL ==== //
+  const logoutModal = document.getElementById("logoutModal");
+  const confirmLogoutBtn = document.getElementById("confirmLogout");
+  const cancelLogoutBtn = document.getElementById("cancelLogout");
+
+  window.showLogoutModal = function() {
+    logoutModal.style.display = "flex";
+  };
+
+  cancelLogoutBtn?.addEventListener("click", () => {
+    logoutModal.style.display = "none";
+  });
+
+  confirmLogoutBtn?.addEventListener("click", () => {
+    localStorage.clear();
+    logoutModal.style.display = "none";
+    if (authButtons) authButtons.style.display = "flex";
+    if (userIcon) userIcon.style.display = "none";
+    window.location.href = "./index.html";
+  });
+
+  // ==== ŞİFRƏ DƏYİŞMƏ ==== //
   function showPasswordMessage(message, isError) {
+    if (!passwordMessage) return;
     passwordMessage.textContent = message;
     passwordMessage.style.color = isError ? 'red' : 'green';
     passwordMessage.className = isError ? 'error' : 'success';
   }
 
-  // Əsas parol dəyişmə funksiyası
-  async function passresstss() {
+  async function changePassword() {
+    if (!passwordForm) return;
 
+    const oldPassword = passwordForm.oldPassword.value.trim();
+    const newPassword = passwordForm.newPassword.value.trim();
+    const confirmPassword = passwordForm.confirmPassword.value.trim();
 
-    const oldPassword = document.getElementById('oldPassword').value.trim();
-    const newPassword = document.getElementById('newPassword').value.trim();
-    const confirmPassword = document.getElementById('confirmPassword').value.trim();
-
-    const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
-
-    passwordMessage.textContent = '';
-    passwordMessage.className = '';
+    showPasswordMessage('', false);
 
     if (!oldPassword || !newPassword || !confirmPassword) {
       showPasswordMessage('Bütün sahələri doldurun.', true);
@@ -326,139 +299,30 @@ async function loadProfileData(userId) {
     }
 
     try {
-      const response = await fetch(`https://api.fresback.squanta.az/api/user/password/${userId}`, {
+      const res = await fetch(`https://api.fresback.squanta.az/api/user/password/${userId}`, {
         method: 'PUT',
         headers: {
-          'accept': '*/*',
+          'Accept': '*/*',
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-          oldPassword,
-          newPassword,
-          confirmPassword
-        })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        showPasswordMessage('Parol uğurla dəyişdirildi!', false);
-        passwordForm.reset();
-      } else {
-        showPasswordMessage(data.message || data.error || 'Xəta baş verdi.', true);
-      }
-    } catch (error) {
-      console.error('Password change error:', error);
-      showPasswordMessage('Serverə qoşulmaq mümkün olmadı.', true);
-    }
-  }
-
- 
-   const changePassBtn = document.getElementById('change-pass');
-  if (changePassBtn) {
-    changePassBtn.addEventListener('click', passresstss);
-  }
-// PASS CHANGE FINISH
-
-
-
-
-
-
-
-// Img add funksiya
-const editPhotoBtn = document.getElementById('editPhotoBtn');
-const updatePhotoInput = document.getElementById('update_photo');
-const profilePhoto = document.getElementById('profilePhoto');
-
-// Показать сохранённое фото
-const savedPhoto = localStorage.getItem('profile_img');
-if (savedPhoto) profilePhoto.src = savedPhoto;
-
-function displayProfilePhoto(profileImgUrl) {
-  if (profileImgUrl) {
-    profilePhoto.src = profileImgUrl;
-    localStorage.setItem('profile_img', profileImgUrl);
-  } else {
-    profilePhoto.src = './assets/img/no-profile-picture-icon.svg';
-  }
-}
-
-if (editPhotoBtn && updatePhotoInput) {
-  editPhotoBtn.addEventListener('click', () => {
-    updatePhotoInput.click();
-  });
-
-  updatePhotoInput.addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    // Проверка файла
-    const maxFileSizeMB = 5;
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-
-    if (!allowedTypes.includes(file.type)) {
-      return alert('Yalnız JPEG, PNG və ya WEBP şəkilləri yükləyə bilərsiniz.');
-    }
-
-    if (file.size > maxFileSizeMB * 1024 * 1024) {
-      return alert(`Şəkil ölçüsü maksimum ${maxFileSizeMB}MB olmalıdır.`);
-    }
-
-    const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('user_id');
-
-    // Показываем предпросмотр
-    const reader = new FileReader();
-    reader.onload = function (event) {
-      profilePhoto.src = event.target.result;
-    };
-    reader.readAsDataURL(file);
-
-    const formData = new FormData();
-    formData.append('photo', file);
-
-    try {
-      const res = await fetch(`https://api.fresback.squanta.az/api/user/photo-upload/${userId}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-        body: formData
+        body: JSON.stringify({ oldPassword, newPassword, confirmPassword }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        alert('Profil şəkli uğurla yeniləndi!');
-        const image = data.profile_img || data.data?.profile_img;
-        if (image) {
-          profilePhoto.src = image;
-          localStorage.setItem('profile_img', image);
-        }
+        showPasswordMessage('Parol uğurla dəyişdirildi!', false);
+        passwordForm.reset();
       } else {
-        console.error('Server Error:', data);
-        alert(data.error || 'Şəkil yüklənərkən xəta baş verdi.');
+        showPasswordMessage(data.message || data.error || 'Xəta baş verdi.', true);
       }
-    } catch (err) {
-      console.error(err);
-      alert('Serverə qoşulmaq mümkün olmadı.');
+    } catch {
+      showPasswordMessage('Serverə qoşulmaq mümkün olmadı.', true);
     }
-  });
-}
+  }
 
-// При загрузке страницы
-const savedProfileImg = localStorage.getItem('profile_img');
-if (savedProfileImg) {
-  profilePhoto.src = savedProfileImg;
-}
-
-
+  if (changePassBtn) {
+    changePassBtn.addEventListener('click', changePassword);
+  }
 });
-
-
-
-
-
-
