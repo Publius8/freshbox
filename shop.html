@@ -165,7 +165,7 @@
                 <div class="word-search">
                     <div class="title-with-line">İndi axtar</div>
                     <div class="search-box">
-                        <input type="text" placeholder="Axtar">
+                        <input type="text" id="searchInput" placeholder="Axtar">
                         <button class="orange-circle"><img src="./assets/img/Search_White.svg" alt="seacrWhite"></button>
                     </div>
                 </div>
@@ -259,6 +259,21 @@
 <script>
 AOS.init();
 
+document.addEventListener('DOMContentLoaded', () => {
+  loadCategory();
+  loadProducts();
+
+  const toggleBtn = document.querySelector('.dropdown-toggle-mobile');
+  const filterBar = document.querySelector('.filter-left-bar');
+
+  if (toggleBtn && filterBar) {
+    toggleBtn.addEventListener('click', () => {
+      filterBar.classList.toggle('mobile-visible');
+    });
+  } else {
+    console.warn('Кнопка или блок с фильтрами не найдены');
+  }
+});
 
 </script>
 

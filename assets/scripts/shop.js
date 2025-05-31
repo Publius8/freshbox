@@ -289,3 +289,48 @@ function displayProducts(products) {
   // Sonra ürək klikləri üçün eventləri təyin et
   attachFavListeners();
 }
+// Axtarış üçün funksiya
+function searchProducts(keyword, products) {
+  keyword = keyword.toLowerCase();
+  return products.filter(product =>
+    product.title.toLowerCase().includes(keyword)
+  );
+}
+let allProducts = []; // bütün məhsullar burada saxlanacaq
+async function loadProducts() {
+  try {
+    const res = await fetch('https://api.fresback.squanta.az/api/product/all');
+    if (!res.ok) throw new Error('Məhsullar yüklənə bilmədi');
+    let products = await res.json();
+
+    allProducts = products; // Bütün məhsulları yadda saxla
+
+    if (selectedCategoryTitle !== null) {
+      products = products.filter(p => p.category_title === selectedCategoryTitle);
+    }
+
+    displayProducts(products);
+    document.getElementById('quatity-of-products').textContent = `${products.length} məhsul`;
+  } catch (error) {
+    console.error(error);
+    document.getElementById('productList').innerHTML = '<p>Məhsullar yüklənərkən xəta baş verdi.</p>';
+  }
+}
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadCategory();
+  await loadProducts();
+
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', () => {
+    const keyword = searchInput.value;
+    let filtered = searchProducts(keyword, allProducts);
+
+    // Əgər kateqoriya seçilibsə, həmin kateqoriyada filtrlə
+    if (selectedCategoryTitle !== null) {
+      filtered = filtered.filter(p => p.category_title === selectedCategoryTitle);
+    }
+
+    displayProducts(filtered);
+    document.getElementById('quatity-of-products').textContent = `${filtered.length} məhsul`;
+  });
+});
