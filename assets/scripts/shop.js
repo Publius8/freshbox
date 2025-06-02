@@ -37,33 +37,50 @@ function displayProducts(products) {
     productCard.dataset.id = product.id;
     productCard.dataset.fav = product.fav || '0';
 
-    productCard.innerHTML = `
-      <div class="imgae-circle">
-        <div class="image-container">
-          <img src="https://api.fresback.squanta.az/uploads/product/${product.image}" alt="${product.title}">
-        </div>
-        <div class="favourite-circle" data-id="${product.id}" data-fav="${product.fav === 1 ? '1' : '0'}">
-          <img src="${product.fav === 1 ? './assets/img/orangeHerz.svg' : './assets/img/heart.png'}" alt="fav-icon">
-        </div>
-      </div>
-      <div class="name-weight">
-        <h3>${product.title}</h3>
-        <span class="stock-status">
-          ${product.stock === 1
-            ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#4CAF50"/><path d="M7 13l3 3 7-7" stroke="white" stroke-width="2"/></svg> Stokda var`
-            : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F44336"/><path d="M15 9l-6 6M9 9l6 6" stroke="white" stroke-width="2"/></svg> Stokda yoxdur`}
-        </span>
-        <span>${product.quantity > 0 ? product.quantity + ' ədəd' : ''}</span>
-        <span>${product.weight > 0 ? product.weight + " kg" : ""}</span>
-        <span>${product.liter > 0 ? product.liter + " l" : ""}</span>
-      </div>
-      <div class="price">
-        <span>${product.price} man</span>
-      </div>
-      <div>
-        <button role="link" onclick='goToProductPage(${JSON.stringify(product)})'>İndi sifariş et</button>
-      </div>
-    `;
+   const discountedPrice = product.discount
+  ? (product.price - (product.price * product.discount / 100)).toFixed(2)
+  : null;
+
+productCard.innerHTML = `
+  <div class="imgae-circle">
+    <div class="image-container">
+      <img src="https://api.fresback.squanta.az/uploads/product/${product.image}" alt="${product.title}">
+    </div>
+    <div class="favourite-circle" data-id="${product.id}" data-fav="${product.fav === 1 ? '1' : '0'}">
+      <img src="${product.fav === 1 ? './assets/img/orangeHerz.svg' : './assets/img/heart.png'}" alt="fav-icon">
+    </div>
+  </div>
+
+  <div class="name-weight">
+    <h3>${product.title}</h3>
+    <span class="stock-status">
+      ${
+        product.stock === 1
+          ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#4CAF50"/><path d="M7 13l3 3 7-7" stroke="white" stroke-width="2"/></svg> Stokda var`
+          : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F44336"/><path d="M15 9l-6 6M9 9l6 6" stroke="white" stroke-width="2"/></svg> Stokda yoxdur`
+      }
+    </span>
+    <span>${product.quantity > 0 ? product.quantity + ' ədəd' : ''}</span>
+    <span>${product.weight > 0 ? product.weight + " kg" : ""}</span>
+    <span>${product.liter > 0 ? product.liter + " l" : ""}</span>
+  </div>
+
+  <div class="price">
+    ${
+      discountedPrice
+        ? `
+          <span style="text-decoration: line-through; color: #999; margin-right: 6px;">${product.price} azn</span>
+          <span style="color: red; font-weight: bold;">${discountedPrice} azn</span>
+        `
+        : `<span>${product.price} azn</span>`
+    }
+  </div>
+
+  <div>
+    <button role="link" onclick='goToProductPage(${JSON.stringify(product)})'>İndi sifariş et</button>
+  </div>
+`;
+
 
     container.appendChild(productCard);
   });
@@ -250,45 +267,59 @@ function displayProducts(products) {
   const container = document.getElementById('productList');
   container.innerHTML = ''; // əvvəlcə təmizləyirik
 
-  // products massivindən HTML parçaları yaratmaq üçün map istifadə edirik
   const htmlStrings = products.map(product => {
+    const hasDiscount = product.discount && product.discount > 0;
+    const discountedPrice = hasDiscount
+      ? (product.price - (product.price * product.discount / 100)).toFixed(2)
+      : null;
+
     return `
-      <div class="products-card" data-id="${product.id}" data-fav="${product.fav || '0'}">
-        <div class="imgae-circle">
-          <div class="image-container">
-            <img src="https://api.fresback.squanta.az/uploads/product/${product.image}" alt="${product.title}">
-          </div>
-          <div class="favourite-circle" data-id="${product.id}" data-fav="${product.fav === 1 ? '1' : '0'}">
-            <img src="${product.fav === 1 ? './assets/img/orangeHerz.svg' : './assets/img/heart.png'}" alt="fav-icon">
-          </div>
-        </div>
-        <div class="name-weight">
-          <h3>${product.title}</h3>
-          <span class="stock-status">
-            ${product.stock === 1
-              ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#4CAF50"/><path d="M7 13l3 3 7-7" stroke="white" stroke-width="2"/></svg> Stokda var`
-              : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F44336"/><path d="M15 9l-6 6M9 9l6 6" stroke="white" stroke-width="2"/></svg> Stokda yoxdur`}
-          </span>
-          <span>${product.quantity > 0 ? product.quantity + ' ədəd' : ''}</span>
-          <span>${product.weight > 0 ? product.weight + " kg" : ""}</span>
-          <span>${product.liter > 0 ? product.liter + " l" : ""}</span>
-        </div>
-        <div class="price">
-          <span>${product.price} man</span>
-        </div>
-        <div>
-          <button role="link" onclick='goToProductPage(${JSON.stringify(product)})'>İndi sifariş et</button>
-        </div>
-      </div>
+<div class="products-card" data-id="${product.id}" data-fav="${product.fav || '0'}">
+  <div class="image-container">
+    <img src="https://api.fresback.squanta.az/uploads/product/${product.image}" alt="${product.title}">
+    ${hasDiscount ? `<span class="discount-badge">-${product.discount}%</span>` : ''}
+    <div class="favourite-circle" style="cursor: pointer;" data-id="${product.id}" data-fav="${product.fav === 1 ? '1' : '0'}">
+      <img src="${product.fav === 1 ? './assets/img/orangeHerz.svg' : './assets/img/heart.png'}" alt="fav-icon">
+    </div>
+  </div>
+
+  <div class="name-weight">
+    <h3>${product.title}</h3>
+    <div class="stock-weight">
+      <span class="stock-status">
+        ${
+          product.stock === 1
+            ? `<svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4CAF50"/><path d="M7 13l3 3 7-7" stroke="white" stroke-width="2"/></svg> Stokda var`
+            : `<svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#F44336"/><path d="M15 9l-6 6M9 9l6 6" stroke="white" stroke-width="2"/></svg> Stokda yoxdur`
+        }
+      </span>
+      <span class="weight-info">
+        ${product.weight > 0 ? product.weight + " kg" : ""}
+        ${product.quantity > 0 ? product.quantity + ' ədəd' : ''}
+        ${product.liter > 0 ? product.liter + " l" : ""}
+      </span>
+    </div>
+  </div>
+
+  <div class="price">
+    ${
+      hasDiscount
+        ? `<span class="old-price">${product.price} azn</span>
+           <span class="discounted-price">${discountedPrice} azn</span>`
+        : `<span>${product.price} azn</span>`
+    }
+  </div>
+
+  <button onclick='goToProductPage(${JSON.stringify(product)})'>İndi sifariş et</button>
+</div>
+
     `;
   });
 
-  // Hamısını bir yerə birləşdirib innerHTML olaraq əlavə edirik
   container.innerHTML = htmlStrings.join('');
-
-  // Sonra ürək klikləri üçün eventləri təyin et
-  attachFavListeners();
+  attachFavListeners(); // ürək klikləri üçün
 }
+
 // Axtarış üçün funksiya
 function searchProducts(keyword, products) {
   keyword = keyword.toLowerCase();

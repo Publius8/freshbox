@@ -171,39 +171,16 @@
         <h2>Ən Çox Sevilən Məhsullar</h2>
     </div>
     <div class="sizeForCardsAndMore">
-        <div class="positionOfCardsRow">
-            <div>
+        <div id="positionOfCardsRow" class="positionOfCardsRow">
+            <!-- <div>
                 <div class="cardGreen">
                     <div class="imgContainer"><img src="./assets/img/93eff940f104368b9a10cb7d6b396a45.png" alt="product"></div>
                     <div class="nameWeight"><h3>Yer kökü</h3><span>1 kg</span></div>
                     <p>2.90 man</p>
                     <button onclick="document.location='shop.html'">İndi sifariş et</button>
                 </div>
-            </div>
-            <div>
-                <div class="cardGreen">
-                    <div class="imgContainer"><img src="./assets/img/f2afcdd5f872be6dcee07c2c3da31802.png" alt="product"></div>
-                    <div class="nameWeight"><h3>Yer kökü</h3><span>1 kg</span></div>
-                    <p>2.90 man</p>
-                    <button onclick="document.location='shop.html'">İndi sifariş et</button>
-                </div>
-            </div>
-            <div>
-                <div class="cardGreen">
-                    <div class="imgContainer"><img src="./assets/img/04898dfb8a248ea17b62ea5ca5a1cdbd.png" alt="product"></div>
-                    <div class="nameWeight"><h3>Yer kökü</h3><span>1 kg</span></div>
-                    <p>2.90 man</p>
-                    <button onclick="document.location='shop.html'">İndi sifariş et</button>
-                </div>
-            </div>
-            <div>
-                <div class="cardGreen">
-                    <div class="imgContainer"><img src="./assets/img/7683c493753f0d78fecbe07dc26b0e8b.png" alt="product"></div>
-                    <div class="nameWeight"><h3>Yer kökü</h3><span>1 kg</span></div>
-                    <p>2.90 man</p>
-                    <button onclick="document.location='shop.html'">İndi sifariş et</button>
-                </div>
-            </div>
+            </div> -->
+
         </div>
             <div class="moreButton">
                 <a href="./shop.html">Hamısına bax</a>
@@ -295,7 +272,8 @@
 
     <script src="./assets/scripts/index.js"></script>
     <script src="./assets/scripts/aboutUs.js"></script>
-    <script src="assets/scripts/Categorymap.js"></script>
+    <script src="./assets/scripts/Categorymap.js"></script>
+    <script src="./assets/scripts/favproductsale.js"></script>
     <script>
    // Инициализация AOS
         AOS.init();
@@ -353,6 +331,8 @@ if (mobileAuthControl) {
       window.location.href = `shop.html?categoryTitle=${encodeURIComponent(categoryName)}`;
     });
   });
+
+  
     </script>
 </body>
 </html>

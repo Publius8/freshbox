@@ -385,14 +385,34 @@ header {
     transition: 0.6s;
 }
 
-    a {
-        text-decoration: none;
-        color: #302F2F;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 24px;
-        letter-spacing: 0%;
-    }
+a {
+    text-decoration: none;
+    color: #302F2F;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0%;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+a:hover {
+    color: #F07E26;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+
+a img {
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+a:hover img {
+    transform: scale(1.15);
+    filter: drop-shadow(0 4px 12px #007A41);
+}
+
+
+
+
 }
 
 
@@ -443,26 +463,32 @@ header {
     background-color: #ff6600;
     color: white;
     border: none;
-
     font-size: 18px;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 100px;
+    padding: 15px 20px;
     display: flex;
     align-items: center;
     gap: 4px;
-    border-radius: 100px;
-    padding-top: 15px;
-    padding-right: 20px;
-    padding-bottom: 15px;
-    padding-left: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+.textHeadButton a button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(0, 122, 65, 0.4); /* Тень цвета #007A41 */
 }
 
 .textHeadButton a button img {
     width: 20px;
     height: 20px;
     margin-left: 10px;
+    transition: transform 0.3s ease;
 }
+
+.textHeadButton a button:hover img {
+    transform: rotate(10deg);
+}
+
 
 
 .bestProducts {
@@ -498,10 +524,28 @@ header {
 }
 
 .imgContainer img {
-    width: 100%; 
-    height: 100%; 
+    width: 100%;
+    height: 100%;
     object-fit: cover; 
     border-radius: 16px;
+}
+.stockAndWeight {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  justify-content: space-between;
+  width: 100%;
+
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #959595;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
 }
 
 .positionOfCardsRow {
@@ -515,51 +559,67 @@ header {
 .cardGreen {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
     border-radius: 12px;
     padding: 16px;
     background-color: #F5F2ED;
     box-shadow: 0px 0px 40px 0px #56565626;
 
-
-
     h3 {
         font-weight: 600;
         font-size: 20px;
-        line-height: 100%;
-        letter-spacing: 0%;
         color: #000000;
+        margin-bottom: 4px;
+        text-align: left;
+        width: 100%;
     }
+
+    .nameWeight {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
     span {
         font-weight: 500;
         font-size: 14px;
-        line-height: 100%;
-        letter-spacing: 0%;
         color: #959595;
     }
-    p {
-        text-align: right;
+
+    .stock-status {
         font-weight: 500;
-        font-size: 16px;
-        line-height: 100%;
-        letter-spacing: 0%;
-        text-align: right;
-        color: #000000;
+        font-size: 14px;
+        color: #4CAF50;
     }
 
-    button {
-        border-radius: 100px;
-        padding: 10px;
-        border: 1px solid #007A41;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 100%;
-        letter-spacing: 0%;
-        color: #007A41;
-        background: none;
-        cursor: pointer;
+    p {
+        text-align: right;
+        font-weight: 700;
+        font-size: 20px; 
+        color: #000000;
+        margin-top: 8px;
     }
+
+button {
+  border-radius: 100px;
+  padding: 10px 20px;
+  border: 1px solid #007A41;
+  font-weight: 600;
+  font-size: 16px;
+  color: #007A41;
+  background: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #007A41;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 122, 65, 0.3);
+  }
 }
+
+}
+
 .nameWeight {
     display: flex;
     flex-direction: row;
@@ -576,18 +636,36 @@ header {
 
 .moreButton a {
     text-decoration: none;
-    text-align: right;
     font-weight: 600;
     font-size: 16px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    text-decoration: underline;
-    text-decoration-style: solid;
-    text-decoration-offset: 0%;
-    text-decoration-thickness: 0%;
-    text-decoration-skip-ink: auto;
     color: #575757;
+    position: relative;
+    transition: color 0.3s ease;
 }
+
+.moreButton a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: #575757;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.moreButton a:hover {
+    color: #007A41;
+}
+
+.moreButton a:hover::after {
+    background-color: #007A41;
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
 
 .sizeForCardsAndMore {
     max-width: 1440px;
@@ -867,8 +945,9 @@ header {
 }
 
 .cardRound:hover .circle {
-  border: 2px solid #008cba; /* Или выбери другой цвет */
-  box-shadow: 0 0 10px rgba(0, 140, 186, 0.2);
+  border: 2px solid #007A41; 
+  box-shadow: 0 0 10px rgba(240, 126, 38, 0.2);
+
 }
 
 .cardRound span {
@@ -876,7 +955,7 @@ header {
 }
 
 .cardRound:hover span {
-  color: #008cba; /* Цвет текста при наведении */
+  color: #007A41; 
 }
 
 
@@ -997,6 +1076,45 @@ footer {
     height: 24px;
 }
 
+.numberMail a {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    color: #363434;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.numberMail a:hover {
+    color: #F07E26;
+    text-shadow: 0 1px 6px rgba(240, 126, 38, 0.4);
+}
+
+.oneLevelmgText a {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    color: #363434;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.oneLevelmgText a:hover {
+    color: #F07E26;
+    text-shadow: 0 1px 6px rgba(240, 126, 38, 0.4);
+}
+
+.oneLevelmgText img {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.oneLevelmgText a:hover img {
+    transform: scale(1.15);
+    filter: drop-shadow(0 4px 10px rgba(240, 126, 38, 0.5));
+}
 
 @media (max-width: 1024px) {
     header {
@@ -1018,6 +1136,8 @@ footer {
 
     .textHeadButton p {
         font-size: 16px;
+        color: gray;
+        font-weight: bold;
     }
 
     .textHeadButton a button {

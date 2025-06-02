@@ -408,15 +408,34 @@ header::before {
     transition: 0.6s;
 }
 
-    a {
-        text-decoration: none;
-        color: #302F2F;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 24px;
-        letter-spacing: 0%;
-    }
+a {
+    text-decoration: none;
+    color: #302F2F;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0%;
+    transition: color 0.3s, text-shadow 0.3s;
 }
+
+a:hover {
+    color: #F07E26;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+a img {
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+a:hover img {
+    transform: scale(1.15);
+    filter: drop-shadow(0 4px 12px #007A41);
+}
+
+
+
+}
+
 
 
 .textHeadButton {
@@ -716,6 +735,46 @@ footer {
 .oneLevelmgText img {
     width: 24px;
     height: 24px;
+}
+
+.numberMail a {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    color: #363434;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.numberMail a:hover {
+    color: #F07E26;
+    text-shadow: 0 1px 6px rgba(240, 126, 38, 0.4);
+}
+
+.oneLevelmgText a {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    color: #363434;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.oneLevelmgText a:hover {
+    color: #F07E26;
+    text-shadow: 0 1px 6px rgba(240, 126, 38, 0.4);
+}
+
+.oneLevelmgText img {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.oneLevelmgText a:hover img {
+    transform: scale(1.15);
+    filter: drop-shadow(0 4px 10px rgba(240, 126, 38, 0.5));
 }
 
 @media (max-width: 768px) {

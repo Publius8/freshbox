@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Göndərilən orderId:", orderId);
     console.log("Göndərilən newStatus:", newStatus);
 
-    fetch("http://localhost:3000/api/admin/order/status", {
+    fetch("https://api.fresback.squanta.az/api/admin/order/status", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   function loadPayments() {
-    fetch("http://localhost:3000/api/admin/orders")
+    fetch("https://api.fresback.squanta.az/api/admin/orders")
       .then(res => {
         if (!res.ok) throw new Error("Məlumat alınarkən xəta baş verdi");
         return res.json();

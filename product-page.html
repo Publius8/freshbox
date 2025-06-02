@@ -135,11 +135,16 @@
     </div>
 </header>
     <div class="size">
-        <div class="page-part">
-            <p><a href="./index.html">Ana səhifə</a> <span>/</span> </p>
-            <p><a href="./shop.html">Mağaza</a> <span>/</span> </p>
-            <p>Tərəvəz <span>/</span> <h5>Kök</h5></p>
-        </div>
+<div class="page-part" style="color: #939393;">
+    <p>
+        <a href="./index.html" style="color: #939393;">Ana səhifə</a> <span>/</span>
+        <a href="./shop.html" style="color: #939393;">Mağaza</a> <span>/</span>
+        <span id="breadcrumb_category" style="color: #939393;">Kateqoriya</span> <span>/</span>
+        <span id="breadcrumb_title" style="color: #000000; font-weight: 600;">Məhsul</span>
+    </p>
+</div>
+
+
 
         
   <div class="product-image-info">
@@ -148,11 +153,12 @@
   </div>
   <div class="product-image-box-info">
     <div>
-      <h1 id="put_name_here" data-product-id="123">Təzə Kök - 1 kiloqram</h1>
-      <span class="put_price_here" id="put_price_here">2.90 AZN</span>
+      <h1 id="put_name_here" data-product-id="123"></h1>
+      <span class="put_price_here" id="put_price_here"></span>
+      <span class="put_weight_here" id="put_weight_here"></span>
     </div>
     <div>
-      <p class="put_description_here" id="put_description_here">Təzə, xırtıldayan və vitaminlərlə zəngin kök...</p>
+      <p class="put_description_here" id="put_description_here"></p>
     </div>
     <div class="mobile-bullets">
       <form id="add-to-cart-form">
@@ -175,9 +181,9 @@
 </div>
 
 
-        <div class="recommendation_box">
+        <!-- <div class="recommendation_box">
             <h2 style="text-align: center;">Tövsiyyə edilən məhsullar</h2>
-            <div class="recommendation_box_cards">
+            <div id="recommendation_box" class="recommendation_box_cards">
                 <div class="card_recommendation">
                     <div class="image-circle">
                         <div class="image_box"><img src="./assets/img/7683c493753f0d78fecbe07dc26b0e8b.png" alt="productImage"></div>
@@ -195,40 +201,9 @@
                     </div>
                 </div>
                 
-                <div class="card_recommendation">
-                    <div class="image-circle">
-                        <div class="image_box"><img src="./assets/img/7683c493753f0d78fecbe07dc26b0e8b.png" alt="productImage"></div>
-                        <button style="cursor: pointer;"><div class="wish_list_circle"><img src="./assets/img/orangeHerz.svg" alt="orangeHerz"></div></button>
-                    </div>
-                    <div class="name-weight">
-                        <h3>Greyfruit</h3>
-                        <span>1 kg</span>
-                    </div>
-                    <div class="price">
-                        <span>2.90 man</span>
-                    </div>
-                    <div>
-                        <button role="link" onclick="window.location.href='shop.html';">İndi sifariş et</button>
-                    </div>
-                </div>
-                <div class="card_recommendation">
-                    <div class="image-circle">
-                        <div class="image_box"><img src="./assets/img/7683c493753f0d78fecbe07dc26b0e8b.png" alt="productImage"></div>
-                        <button style="cursor: pointer;"><div class="wish_list_circle"><img src="./assets/img/orangeHerz.svg" alt="orangeHerz"></div></button>
-                    </div>
-                    <div class="name-weight">
-                        <h3>Greyfruit</h3>
-                        <span>1 kg</span>
-                    </div>
-                    <div class="price">
-                        <span>2.90 man</span>
-                    </div>
-                    <div>
-                        <button role="link" onclick="window.location.href='shop.html';">İndi sifariş et</button>
-                    </div>
-                </div>
+     
             </div>
-        </div>
+        </div> -->
 
     </div>
     <footer>
@@ -385,6 +360,9 @@ document.getElementById("add-to-card-script").addEventListener("click", function
     window.location.href = "cart.html";
   }, 1000);
 });
+
+
+
 
 
          </script>
