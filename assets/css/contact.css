@@ -36,6 +36,7 @@ header::before {
 .size {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 10px;
     /* border: 2px solid red; */
 }
 
@@ -55,28 +56,26 @@ header::before {
 
 /* PopUP */
 #popUP {
-    bordeR: none;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    visibility: hidden;
-    z-index: 20;
-    text-align: center;
-    width: 839px;
-    height: 827px;
-    border-radius: 40px;
-    padding-top: 24px;
-    padding-right: 105px;
-    padding-bottom: 24px;
-    padding-left: 105px;
-    background-color: #FFFCFA;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background-color: #FFFCFA;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10000 !important;
+  text-align: center;
+  width: 90vw;         
+  max-width: 839px;    
+  height: auto;
+  max-height: 90vh;    
+  overflow-y: auto;    
+  border-radius: 40px;
+  padding: 24px 105px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
     .ModalLogo {
         width: 140px; 
@@ -380,9 +379,13 @@ header::before {
     display: flex;
     align-items: center;
     gap: 30px;
+    a{
+        color: black;
+    }
 }
 
 .signIn {
+    background: white;
     width: 134px;
     height: 49px;
     border-radius: 100px;
@@ -440,18 +443,41 @@ a:hover img {
 
 
 
+.sidebar {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: translateX(-100%);
+  opacity: 0;
+  pointer-events: none; /* предотвращает клик по закрытой панели */
+}
+
+.sidebar.open {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.textHeadButton {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.hide-text {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .textHeadButton {
     text-align: center;
     color: #fff;
     width: 1120px;
     margin-top: 50px;
-    /* position: relative;
-    z-index: 5; */
+    position: absolute;
+    z-index: 2;
 
 }
 
 .textHeadButton h1 {
-    color: #F07E26;
+    color: #F9F9F9;
     font-weight: 700;
     font-size: 36px;
     line-height: 40px;
@@ -467,9 +493,9 @@ a:hover img {
     line-height: 24px;
     letter-spacing: 0%;
     text-align: center;
-    color: white;
-    font-weight: bold;   
-    margin-top: 5px; 
+    color: white;    
+    font-weight: bold;
+
 }
 
 .page-part {
@@ -917,6 +943,6 @@ footer {
 @media (max-width: 480px) {
     .navbar {
         padding: 12px !important;
-        margin: 6px !important;
+        margin: 0 6px 0 6px !important;
     }
 }

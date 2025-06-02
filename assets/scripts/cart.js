@@ -22,17 +22,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
   cart.forEach(product => {
     const productHTML = `
-      <div class="cart-item" data-id="${product.id}">
-        <img src="https://api.fresback.squanta.az/uploads/product/${product.image}" alt="${product.title}">
-        <div class="product-info">
-          <h4>${product.title}</h4>
-          <p>Qiymət: ${product.price} man</p>
-          ${product.weight ? `<p>${product.weight} kg</p>` : ''}
-          ${product.liter ? `<p>${product.liter} l</p>` : ''}
-          ${product.cartQuantity ? `<p>Miqdar: ${product.cartQuantity} ədəd</p>` : ''}
-        </div>
-        <button class="remove-btn" data-id="${product.id}">Sil</button>
-      </div>
+<div class="cart-item" data-id="${product.id}">
+  <img src="https://api.fresback.squanta.az/uploads/product/${product.image}" alt="${product.title}">
+
+  <div class="product-info">
+    <div class="info-column">
+      <h4>${product.title}</h4>
+      ${product.weight ? `<p>${product.weight} kg</p>` : product.liter ? `<p>${product.liter} l</p>` : ''}
+    </div>
+
+    <div class="info-column">
+      ${product.cartQuantity ? `<p>Miqdar</p><p class="price">${product.cartQuantity} ədəd</p>` : ''}
+    </div>
+
+    <div class="info-column">
+      <p>Qiymət</p>
+      <p class="price">${product.price} man</p>
+    </div>
+
+    <div class="info-column">
+      <button class="remove-btn" data-id="${product.id}">Sil</button>
+    </div>
+  </div>
+</div>
+
     `;
     cartContainer.insertAdjacentHTML("beforeend", productHTML);
   });

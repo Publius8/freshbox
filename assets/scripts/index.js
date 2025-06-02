@@ -48,7 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (authControl) {
       authControl.innerHTML = `
         <a href="./profile.html">
-          <img src="./assets/img/Profile.png" alt="Профиль">
+         
+      <img src="./assets/img/Profile.svg" alt="Profile">
+
         </a>
       `;
     }
@@ -325,4 +327,31 @@ document.addEventListener('DOMContentLoaded', () => {
   if (changePassBtn) {
     changePassBtn.addEventListener('click', changePassword);
   }
+});
+
+
+window.addEventListener('DOMContentLoaded', () => {
+  const btnbar = document.getElementById('btnbar');
+
+  function checkScreenSize() {
+    if (window.innerWidth <= 400) {
+      btnbar.style.display = 'inline';
+    } else {
+      btnbar.style.display = 'none';
+    }
+  }
+
+  checkScreenSize();
+
+  window.addEventListener('resize', checkScreenSize);
+
+  window.addEventListener('scroll', () => {
+    if (window.innerWidth <= 400) {
+      if (window.scrollY < 100) {
+        btnbar.style.color = '#f4901e'; // scroll azdırsa
+      } else {
+        btnbar.style.color = 'black'; // scroll çoxdursa
+      }
+    }
+  });
 });

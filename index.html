@@ -8,9 +8,12 @@
     <link rel="stylesheet" href="./assets/css/modal_register_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Fresh Box</title>
 </head>
 <style>
+
         .error {
       background-color: rgba(220, 53, 69, 0.1);
       color: red;
@@ -23,6 +26,7 @@
       font-weight: 500;
       font-size: 0.9rem;
       display: none;
+
     }
 </style>
 <body>
@@ -48,9 +52,9 @@
             <a href="./cart.html">
                 <img src="./assets/img/cart.png" alt="cart">
             </a>
-            <a href="#">
+            <!-- <a href="#">
                 <img src="./assets/img/language.png" alt="language">
-            </a>
+            </a> -->
         <div id="authControl">
             <button class="signIn" id="modalPage">Daxil ol</button>
             </div>
@@ -69,7 +73,7 @@
                 <a href="./cart.html">Səbət</a>
                 <br><br>
             
-                <div class="language-dropdown">
+                <!-- <div class="language-dropdown">
                     <button class="language-btn">
                       <img src="./assets/img/Earth - 3.svg" alt="language">
                       Azərbaycan
@@ -80,7 +84,7 @@
                       <a href="#">Русский</a>
                       <a href="#">Türkçe</a>
                     </div>
-                  </div>
+                  </div> -->
                   
             </div>
             
@@ -92,7 +96,8 @@
         
 
         </div>
-        <button class="openbtn" onclick="openNav()">☰</button>
+        <i onclick="openNav()" id="btnbar"  class="fa-solid fa-bars openbtn" ></i>
+   
 
     </nav>
     <div id="overlay"></div>
@@ -141,9 +146,9 @@
 
 
 
-
+<!-- 
         <div class="linesOr"><div class="line"></div>or<div class="line"></div></div>
-        <div class="googleButton"><button><img src="./assets/img/c8c3099ebf31fee900c92a985399f3f1.png" alt="google">Google</button></div>
+        <div class="googleButton"><button><img src="./assets/img/c8c3099ebf31fee900c92a985399f3f1.png" alt="google">Google</button></div> -->
     </div>
 
     
@@ -189,14 +194,15 @@
   </div>
 
   <div class="imgAndText">
-    <div class="greenText">
+    <div data-aos="zoom-in-down"   data-aos-duration="2000"  class="greenText">
         <div class="imageContainer"><img src="./assets/img/edb7b88692d8db32bb9a196ff60cf69c.png" alt="greenImg"></div>
-        <div class="rightText">
+        <div  class="rightText">
             <h2>Əl əməyi ilə hazırlanan ləzzətlər</h2>
             <p>Əsrlərin dadını daşıyan əl işi məhsullarımızla süfrənizə fərqli bir rəng qatın! Təndir çörəkləri, evdə hazırlanmış cemlər və qurudulmuş meyvələr – hər biri sevgi və peşəkarlıqla hazırlanıb.</p>
         </div>
     </div>
-    <div class="orangeText">
+    <div data-aos="zoom-in-up" 
+     data-aos-duration="2000" class="orangeText">
         <div class="leftText">
             <h2>Ən saf və yüksək keyfiyyətlə<br>  seçilmiş ləzzətlər</h2>
             <p>Əsrlərin dadını daşıyan əl işi məhsullarımızla süfrənizə fərqli bir rəng qatın! Təndir çörəkləri, evdə hazırlanmış cemlər və qurudulmuş meyvələr – hər biri sevgi və peşəkarlıqla hazırlanıb.</p>
@@ -205,7 +211,8 @@
     </div>
   </div>
 
-  <div class="about">
+  <div data-aos-duration="1000" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom" class="about">
     <div class="aboutCard">
         <img src="./assets/img/package.png" alt="pocket">
         <h2>Səbətiniz hələ hazır deyil?</h2>
@@ -223,9 +230,9 @@
     </div>
   </div>
 
-  <div class="bgWithText">
+  <div  class="bgWithText">
     <img src="./assets/img/d2664d75df985f61517e9c860cad6d2d.png" alt="milkProducts">
-    <div class="milkProductsText">
+    <div  class="milkProductsText">
         <h2>Tələsin! Sevimli məhsullarınız indi xüsusi<br> endirimlərlə satışda!</h2>
         <p>Məhdud müddət üçün seçilmiş məhsullara inanılmaz endirimlər! Dadlı və təzə<br> seçimləri sərfəli qiymətlərlə əldə etmək üçün fürsəti qaçırmayın.</p>
     </div>
@@ -269,7 +276,7 @@
         <div class="line"></div>
         <span>Freshbox©agentliyi 2025dən bəri. Bütün hüquqlar qorunur.</span>
     </div>
-
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="./assets/scripts/index.js"></script>
     <script src="./assets/scripts/aboutUs.js"></script>
     <script src="./assets/scripts/Categorymap.js"></script>

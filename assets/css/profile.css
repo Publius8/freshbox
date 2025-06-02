@@ -49,6 +49,7 @@ body {
 }
 
 .signIn {
+    background: white;
     width: 134px;
     height: 49px;
     border-radius: 100px;
@@ -67,6 +68,7 @@ body {
     transition: 0.6s;
 
 }
+
 
 .signIn:hover {
     color: white;

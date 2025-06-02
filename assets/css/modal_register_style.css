@@ -41,8 +41,6 @@
   transition: 0.5s;
   padding-top: 60px;
   color: white;
-
-
 }
 .sidebar-button {
     padding: 15px;
@@ -105,6 +103,7 @@
 /* Когда меню открыто */
 .sidebar.open {
   width: 100%; /* или 70%, чтобы не на всю ширину */
+
 }
 .overlaytus.show {
   opacity: 1;
@@ -112,7 +111,7 @@
 }
 .language-dropdown {
   position: relative;
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 .language-btn {

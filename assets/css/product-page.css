@@ -36,28 +36,26 @@ header {
 
 /* PopUP */
 #popUP {
-    bordeR: none;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    visibility: hidden;
-    z-index: 20;
-    text-align: center;
-    width: 839px;
-    height: 827px;
-    border-radius: 40px;
-    padding-top: 24px;
-    padding-right: 105px;
-    padding-bottom: 24px;
-    padding-left: 105px;
-    background-color: #FFFCFA;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background-color: #FFFCFA;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10000 !important;
+  text-align: center;
+  width: 90vw;         
+  max-width: 839px;    
+  height: auto;
+  max-height: 90vh;    
+  overflow-y: auto;    
+  border-radius: 40px;
+  padding: 24px 105px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
     .ModalLogo {
         width: 140px; 
@@ -363,6 +361,7 @@ header {
 }
 
 .signIn {
+    background: white;
     width: 134px;
     height: 49px;
     border-radius: 100px;
@@ -381,6 +380,7 @@ header {
     transition: 0.6s;
 
 }
+
 
 .signIn:hover {
     color: white;
@@ -1040,7 +1040,7 @@ footer {
 @media (max-width: 480px) {
     .navbar {
         padding: 12px !important;
-        margin: 6px !important;
+        margin:0 6px 0 6px !important;
     }
 }
 

@@ -15,8 +15,23 @@ window.addEventListener("DOMContentLoaded", () => {
     // show the product
     if (product) {
         document.getElementById("put_name_here").textContent = `${product.title} ${product.weight > 0 ? '(' + product.weight + ' kq)' : ''}`;
-        document.getElementById("put_price_here").textContent = `${product.price} AZN`;
+       const priceElem = document.getElementById("put_price_here");
+const discountedElem = document.getElementById("put_discounted_here");
+
+if (product.discounted) {
+  priceElem.innerHTML = `<span style="text-decoration: line-through; color: gray;">${product.price} AZN</span>`;
+  discountedElem.textContent = `${product.discounted} AZN`;
+  discountedElem.style.color = 'red';
+  discountedElem.style.display = '';
+} else {
+  priceElem.textContent = `${product.price} AZN`;
+  discountedElem.textContent = '';
+  discountedElem.style.display = 'none';
+}
+
         document.getElementById('add_category_here').textContent = `${product.category_title || product.category_name}`;
+        document.getElementById('put_quantity_here').textContent = `${product.quantity > 0 ? product.quantity + ' ədəd' : ''}`;
+        document.getElementById('put_liter_here').textContent = `${product.liter > 0 ? product.liter + " l" : ""}`;
         if (product.description) {
             document.getElementById("put_description_here").textContent = product.description;
         }
@@ -102,49 +117,71 @@ async function loadRecommendations() {
 loadRecommendations();
 
 
-// async function addToFavourites(productId) {
-//   const userId = localStorage.getItem('userId');
-//   if (!userId) {
-//     showToast("Zəhmət olmasa daxil olun", true);
-//     return;
-//   }
 
-//   try {
-//     const res = await fetch('https://api.fresback.squanta.az/api/fave/store', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         // 'Authorization': `Bearer ${token}`, // если нужно
-//       },
-//       body: JSON.stringify({
-//         user_id: userId,
-//         product_id: productId
-//       })
-//     });
 
-//     if (res.ok) {
-//       showToast("Məhsul sevimlilərə əlavə edildi");
-//       await getFavoritesByUser(userId);
-//     } else {
-//       const errorData = await res.json();
-//       showToast(`Xəta: ${errorData.message || 'Əlavə etmək mümkün olmadı'}`, true);
-//     }
-//   } catch (error) {
-//     console.error("Sevimlilərə əlavə edərkən xəta:", error);
-//     showToast("Xəta baş verdi", true);
-//   }
-// }
-// document.addEventListener("DOMContentLoaded", () => {
-//   const favButton = document.getElementById("add_to_favourite");
-//   if (favButton) {
-//     favButton.addEventListener("click", () => {
-//       const productNameEl = document.getElementById("put_name_here");
-//       const productId = productNameEl?.dataset?.productId;
-//       if (productId) {
-//         addToFavourites(productId);
-//       } else {
-//         showToast("Məhsul tapılmadı", true);
-//       }
-//     });
-//   }
-// });
+const favvproduc = document.getElementById('add_to_favourite');
+
+if (favvproduc) {
+  favvproduc.addEventListener('click', async (e) => {
+    e.stopPropagation();
+
+    // productId və userId-i localStorage-dan götürürük
+    const productId = localStorage.getItem('productId');  // productId burada saxlanmalıdır
+    const userId = localStorage.getItem('userId');
+
+    const productCardElement = favvproduc.closest('.products-card');
+
+    if (!productId || !productCardElement) {
+      console.warn('Product ID və ya productCardElement tapılmadı!');
+      return;
+    }
+
+    await toggleFavourite(productId, productCardElement, favvproduc, userId);
+  });
+}
+
+async function toggleFavourite(productId, productCardElement, favCircleElement, userId) {
+  const token = localStorage.getItem('token');
+
+  if (!token || !userId) {
+    showToast("Zəhmət olmasa daxil olun", true);
+    return;
+  }
+
+  try {
+    const isFav = favCircleElement.getAttribute("data-fav") === "1";
+
+    const url = isFav
+      ? 'https://api.fresback.squanta.az/api/fave/delete'
+      : 'https://api.fresback.squanta.az/api/fave/add';
+
+    const method = isFav ? 'DELETE' : 'POST';
+
+    const res = await fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        product_id: productId,
+      }),
+    });
+
+    if (res.ok) {
+      const isNowFav = !isFav;
+      favCircleElement.setAttribute("data-fav", isNowFav ? "1" : "0");
+      const img = favCircleElement.querySelector('img');
+      if (img) {
+        img.src = isNowFav ? './assets/img/orangeHerz.svg' : './assets/img/heart.png';
+      }
+      showToast(isNowFav ? "Sevimlilərə əlavə olundu" : "Sevimlilərdən silindi");
+    } else {
+      throw new Error('Server error');
+    }
+  } catch (error) {
+    console.error('Sevimliyə əlavə/silmə xətası:', error);
+    showToast("Xəta baş verdi", true);
+  }
+}
