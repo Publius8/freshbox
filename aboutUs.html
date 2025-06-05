@@ -12,22 +12,6 @@
     <title>Haqqımızda</title>
 </head>
 
-<style>
-          .error {
-      background-color: rgba(220, 53, 69, 0.1);
-      color: red;
-      display: block;
-    }
-        .message {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: 500;
-      font-size: 0.9rem;
-      display: none;
-    }
-
-</style>
 <body>
     <header>
         <nav class="navbar">
@@ -42,15 +26,15 @@
                 <a href="#">Haqqımızda</a>
                 <a href="./contact.html">Bizimlə əlaqə</a>
                 <a href="./cart.html">
-                    <img src="./assets/img/cart.png" alt="cart">
-                     <!-- <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- <img src="./assets/img/cart.png" alt="cart"> -->
+                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M14.2606 11.173L13.5024 14.1067" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M10.4141 11.173V14.1067" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M6.56787 11.173L7.32601 14.1067" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M6.46897 17.2523C5.56371 17.2523 4.38214 16.6335 4.08558 15.0159L3.30954 11.2938C2.79348 9.07154 3.7649 8.03162 5.61042 8.03162H15.133C16.9786 8.03162 17.9508 9.07154 17.4339 11.2938L16.6579 15.0159C16.3614 16.6335 15.1798 17.2523 14.2745 17.2523H6.46897Z" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M9.16527 4.01624L6.14209 7.99451" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M14.6028 7.99451L11.5796 4.01624" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
-</svg> -->
+</svg>
 
                 </a>
                 <!-- <a href="#">
@@ -218,49 +202,6 @@
 
             <script src="./assets/scripts/index.js"></script>
             <script src="./assets/scripts/aboutUs.js"></script>
-      <script>
-        // Инициализация AOS
-        AOS.init();
-
-
-const sidebar = document.querySelector('.sidebar');
-const text = document.querySelector('.textHeadButton');
-
-function toggleSidebar(open) {
-  if (open) {
-    sidebar.classList.add('open');
-    text.classList.add('hide-text');
-  } else {
-    sidebar.classList.remove('open');
-    text.classList.remove('hide-text');
-  }
-}
-
-function openNav() {
-  toggleSidebar(true);
-  document.getElementById("overlaytus").style.display = "block";
-}
-
-function closeNav() {
-  toggleSidebar(false);
-  document.getElementById("overlaytus").style.display = "none";
-}
-
-
-  function replaceAuthButton() {
-    const authControl = document.getElementById('authControl');
-    if (authControl) {
-      authControl.innerHTML = `
-        <a href="./profile.html">
-         
-      <img src="./assets/img/Profile.svg" alt="Profile">
-
-        </a>
-      `;
-    }
-    if (authButtons) authButtons.style.display = 'none';
-    if (userIcon) userIcon.style.display = 'flex';
-  }
-</script>
+            <script src="./assets/scripts/additionalAbout.js"></script>
 </body>
 </html>

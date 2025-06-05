@@ -34,6 +34,21 @@ header {
     /* border: 2px solid red; */
 }
 
+  .error {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: red;
+    display: block;
+  }
+
+  .message {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: none;
+  }
+
 /* PopUP */
 #popUP {
   background-color: #FFFCFA;
@@ -41,18 +56,18 @@ header {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
   opacity: 0;
   visibility: hidden;
   z-index: 10000 !important;
   text-align: center;
-  width: 90vw;         
+  /* width: 90%;          */
   max-width: 839px;    
   height: auto;
-  max-height: 90vh;    
-  overflow-y: auto;    
+  max-height: max-content;    
+  /* overflow-y: auto;     */
   border-radius: 40px;
-  padding: 24px 105px;
+  padding: 25px 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -124,7 +139,7 @@ header {
     form {
         display: flex;
         flex-direction: column;
-        height: 380px;
+        height: max-content;
         /* bordeR: 2px solid red; */
 
         label {
@@ -165,13 +180,16 @@ header {
         }
 
         input[type='submit'] {
-            width: 660px;
+            width: 90%;
+            margin-right: auto;
+            margin-left: auto;
             height: 48px;
             border-radius: 100px;
             padding-top: 12px;
             padding-right: 10px;
             padding-bottom: 12px;
             padding-left: 10px;
+            font-family: Mluvka;
             font-weight: 500;
             font-size: 16px;
             line-height: 100%;
@@ -179,7 +197,7 @@ header {
             text-align: center;
             color: #FFFFFF;
             background-color: #F07E26;
-            margin-top: 44px;
+            margin-top: 25px;
         }
     }
 
@@ -249,7 +267,6 @@ header {
         }
     }
 }
-
 /* Крестик */
 .close-btn {
     position: absolute;

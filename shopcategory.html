@@ -11,21 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Shop</title>
 </head>
-<style>
-            .error {
-      background-color: rgba(220, 53, 69, 0.1);
-      color: red;
-      display: block;
-    }
-        .message {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: 500;
-      font-size: 0.9rem;
-      display: none;
-    }
-    </style>
 <body>
     <header>
         <nav class="navbar">
@@ -40,11 +25,17 @@
                 <a href="./aboutUs.html">Haqqımızda</a>
                 <a href="./contact.html">Bizimlə əlaqə</a>
                 <a href="./cart.html">
-                    <img src="./assets/img/cart.png" alt="cart">
+                   <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14.2606 11.173L13.5024 14.1067" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.4141 11.173V14.1067" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.56787 11.173L7.32601 14.1067" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M6.46897 17.2523C5.56371 17.2523 4.38214 16.6335 4.08558 15.0159L3.30954 11.2938C2.79348 9.07154 3.7649 8.03162 5.61042 8.03162H15.133C16.9786 8.03162 17.9508 9.07154 17.4339 11.2938L16.6579 15.0159C16.3614 16.6335 15.1798 17.2523 14.2745 17.2523H6.46897Z" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9.16527 4.01624L6.14209 7.99451" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14.6028 7.99451L11.5796 4.01624" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                 </a>
-                <a href="#">
-                    <!-- <img src="./assets/img/language.png" alt="language"> -->
-                </a>
+               
                         <div id="authControl">
             <button class="signIn" id="modalPage">Daxil ol</button>
             </div>
@@ -86,7 +77,7 @@
             
     
             </div>
-             <i onclick="openNav()" id="btnbar"  class="fa-solid fa-bars openbtn "></i>
+             <i onclick="openNav()" id="btnbar"  class="fa-solid fa-bars openbtn"></i>
     
         </nav>
         
@@ -190,8 +181,9 @@
             <span>Freshbox©agentliyi 2025dən bəri. Bütün hüquqlar qorunur.</span>
         </div>
 
-            <!-- <script src="./assets/scripts/index.js"></script> -->
+            <script src="./assets/scripts/index.js"></script>
             <script src="./assets/scripts/aboutUs.js"></script>
+            <script src="./assets/scripts/addFav.js"></script>
             <!-- <script src="./assets/scripts/shop.js"></script> -->
 <script>
 AOS.init();
@@ -199,129 +191,6 @@ AOS.init();
 
 </script>
 
-<script>
-// URL-dən categoryTitle oxuyan funksiya
-function getCategoryTitleFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get('categoryTitle');
-}
-
-function showToast(message, isError = false) {
-  // (sənin verdiyin showToast funksiyası)
-}
-
-// Məhsulları göstərmək üçün funksiya
-function displayProducts(products) {
-  const container = document.getElementById('productList');
-  if (!container) {
-    console.error("productList elementi tapılmadı");
-    return;
-  }
-  container.innerHTML = '';
-
-  products.forEach(product => {
-    const productCardHTML = `
-      <div class="products-card" data-id="${product.id}" data-fav="${product.fav || '0'}">
-        <div class="imgae-circle">
-          <div class="image-container">
-            <img src="https://api.fresback.squanta.az/uploads/product/${product.image}" alt="${product.title}">
-          </div>
-          <div class="favourite-circle" data-id="${product.id}" data-fav="${product.fav === 1 ? '1' : '0'}">
-            <img src="${product.fav === 1 ? './assets/img/orangeHerz.svg' : './assets/img/heart.png'}" alt="fav-icon">
-          </div>
-        </div>
-        <div class="name-weight">
-          <h3>${product.title}</h3>
-          <span class="stock-status">
-            ${product.stock === 1
-              ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#4CAF50"/><path d="M7 13l3 3 7-7" stroke="white" stroke-width="2"/></svg> Stokda var`
-              : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F44336"/><path d="M15 9l-6 6M9 9l6 6" stroke="white" stroke-width="2"/></svg> Stokda yoxdur`}
-          </span>
-          <span>${product.quantity > 0 ? product.quantity + ' ədəd' : ''}</span>
-          <span>${product.weight > 0 ? product.weight + " kg" : ""}</span>
-          <span>${product.liter > 0 ? product.liter + " l" : ""}</span>
-        </div>
-        <div class="price">
-          <span>${product.price} man</span>
-        </div>
-        <div>
-          <button role="link" class="order-btn" data-product='${encodeURIComponent(JSON.stringify(product))}'>İndi sifariş et</button>
-        </div>
-      </div>
-    `;
-
-    container.insertAdjacentHTML('beforeend', productCardHTML);
-  });
-
-  // İndi düymələrə dinləyici əlavə et
-  container.querySelectorAll('.order-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const productData = decodeURIComponent(e.currentTarget.getAttribute('data-product'));
-      const product = JSON.parse(productData);
-      goToProductPage(product);
-    });
-  });
-
-  attachFavListeners();
-}
-
-async function loadProducts() {
-  try {
-    const categoryTitle = getCategoryTitleFromURL();
-    console.log("URL categoryTitle:", categoryTitle);
-
-    const res = await fetch('https://api.fresback.squanta.az/api/product/all');
-    if (!res.ok) throw new Error('Məhsullar yüklənə bilmədi');
-    let products = await res.json();
-
-    console.log('Gelen products:', products);
-
-    if (categoryTitle) {
-      const normalizedCategoryTitle = categoryTitle.toLowerCase().trim();
-      products = products.filter(p => p.category_title && p.category_title.toLowerCase().trim() === normalizedCategoryTitle);
-    }
-
-    console.log("Filtrlənmiş məhsullar:", products);
-
-    displayProducts(products);
-
-    const quantityElem = document.getElementById('quatity-of-products');
-    if (quantityElem) {
-      quantityElem.textContent = `${products.length} məhsul`;
-    }
-  } catch (error) {
-    console.error(error);
-    const container = document.getElementById('productList');
-    if(container) container.innerHTML = '<p>Məhsullar yüklənərkən xəta baş verdi.</p>';
-  }
-}
-
-function goToProductPage(product) {
-  localStorage.setItem("selectedProduct", JSON.stringify(product));
-  const titleParam = encodeURIComponent(product.title);
-  window.location.href = `product-page.html?title=${titleParam}`;
-}
-
-function attachFavListeners() {
-  document.querySelectorAll(".favourite-circle").forEach(circle => {
-    circle.addEventListener("click", async (e) => {
-      e.stopPropagation();
-
-      const productCardElement = e.currentTarget.closest('.products-card');
-      const productId = e.currentTarget.getAttribute("data-id");
-
-      if (productCardElement && productId) {
-        await toggleFavourite(productId, productCardElement, e.currentTarget);
-      }
-    });
-  });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  loadProducts();
-});
-
-</script>
 
 </body>
 </html>

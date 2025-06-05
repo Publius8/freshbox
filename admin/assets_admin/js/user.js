@@ -26,7 +26,7 @@ const usernum = document.getElementById('usernum')
 
   // İstifadəçiləri serverdən yüklə və cədvələ doldur
   function loadUsers() {
-    fetch('https://api.fresback.squanta.az/api/user/with-profiles')
+    fetch('https://api.back.freshbox.az/api/user/with-profiles')
       .then(res => {
         if (!res.ok) throw new Error('Serverdən məlumat alınmadı');
         return res.json();
@@ -41,7 +41,7 @@ const usernum = document.getElementById('usernum')
             <td>${user.email}</td>
             <td>${user.phone}</td>
             <td>${user.address}</td>
-            <td><img src="https://api.fresback.squanta.az/uploads/profile_images/${user.profl_img}" alt="Profil" style="width:60px; border-radius:50%;"></td>
+            <td><img src="https://api.back.freshbox.az/uploads/profile_images/${user.profl_img}" alt="Profil" style="width:60px; border-radius:50%;"></td>
          <td>
   <button id="edit-btn-${user.id}" onclick="editUser(${user.id})">Redaktə et</button>
   <button id="delete-btn-${user.id}" onclick="openDeleteModal(${user.id})">Sil</button>
@@ -95,7 +95,7 @@ const usernum = document.getElementById('usernum')
       formData.append('profl_img', fileInput.files[0]);
     }
 
-    fetch(`https://api.fresback.squanta.az/api/user/profile/${userId}`, {
+    fetch(`https://api.back.freshbox.az/api/user/profile/${userId}`, {
       method: 'PUT',
       body: formData
     })
@@ -130,7 +130,7 @@ const usernum = document.getElementById('usernum')
   confirmDeleteBtn.addEventListener('click', () => {
     if (!userIdToDelete) return;
 
-    fetch(`https://api.fresback.squanta.az/api/user/${userIdToDelete}`, {
+    fetch(`https://api.back.freshbox.az/api/user/${userIdToDelete}`, {
       method: 'DELETE'
     })
     .then(res => {

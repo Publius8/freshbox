@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const res = await fetch('https://api.fresback.squanta.az/api/user/register', {
+      const res = await fetch('https://api.back.freshbox.az/api/user/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ full_name, email, password }),
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = loginForm.password.value;
 
     try {
-      const res = await fetch('https://api.fresback.squanta.az/api/user/login', {
+      const res = await fetch('https://api.back.freshbox.az/api/user/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==== PROFİL MƏLUMATLARINI YÜKLƏ ==== //
   async function loadProfileData(userId) {
     try {
-      const res = await fetch(`https://api.fresback.squanta.az/api/user/with-profiles/${userId}`, {
+      const res = await fetch(`https://api.back.freshbox.az/api/user/with-profiles/${userId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (!res.ok) throw new Error('Profil məlumatları gətirilə bilmədi.');
@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
           formData.append('profl_img', updatePhotoInput.files[0]);
         }
 
-        const res = await fetch(`https://api.fresback.squanta.az/api/user/profile/${userId}`, {
+        const res = await fetch(`https://api.back.freshbox.az/api/user/profile/${userId}`, {
           method: 'PUT',
           headers: { 'Authorization': `Bearer ${token}` },
           body: formData,
@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const res = await fetch(`https://api.fresback.squanta.az/api/user/password/${userId}`, {
+      const res = await fetch(`https://api.back.freshbox.az/api/user/password/${userId}`, {
         method: 'PUT',
         headers: {
           'Accept': '*/*',

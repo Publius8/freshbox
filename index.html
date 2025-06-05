@@ -2,33 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Freshbox-da təzə meyvə, tərəvəz, quru meyvə və süd məhsulları alın. Sürətli çatdırılma və yüksək keyfiyyət təmin olunur.">
+    <meta name="keywords" content="təzə meyvə, tərəvəz, quru meyvə, süd, freshbox, onlayn mağaza, çatdırılma, ərzaq">
+    <meta property="og:title" content="Freshbox Təzə Meyvələr və Tərəvəzlər">
+    <meta property="og:description" content="Freshbox-da təzə meyvə, tərəvəz, quru meyvə və süd məhsulları alın.">
+    <link rel="icon" type="image/png" href="./assets/img/favicon.jpeg" />
+    <meta property="og:url" content="http://freshbox.az">
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="./assets/css/home.css">
     <link rel="stylesheet" href="./assets/css/modal_register_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Fresh Box</title>
+    <title>Fresh Box - Təzəliyi və Keyfiyyəti Sizin Üçün Seçirik!</title>
 </head>
-<style>
 
-        .error {
-      background-color: rgba(220, 53, 69, 0.1);
-      color: red;
-      display: block;
-    }
-        .message {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: 500;
-      font-size: 0.9rem;
-      display: none;
-
-    }
-</style>
 <body>
   <header>
     <nav class="navbar">
@@ -38,10 +28,7 @@
             </a>
         </div>
 
-        <!-- эта иконка должна появится, когда пользователь вошел в акккаунт -->
-        <!-- <a href="./profile.html">
-          <img src="./assets/img/Profile.png" alt="language">
-        </a> -->
+
 
 
         <div class="othercontrols">
@@ -52,9 +39,9 @@
             <a href="./cart.html">
                 <img src="./assets/img/cart.png" alt="cart">
             </a>
-            <!-- <a href="#">
-                <img src="./assets/img/language.png" alt="language">
-            </a> -->
+                            <!-- <a href="#">
+                    <img src="./assets/img/language.png" alt="language">
+                </a> -->
         <div id="authControl">
             <button class="signIn" id="modalPage">Daxil ol</button>
             </div>
@@ -73,18 +60,6 @@
                 <a href="./cart.html">Səbət</a>
                 <br><br>
             
-                <!-- <div class="language-dropdown">
-                    <button class="language-btn">
-                      <img src="./assets/img/Earth - 3.svg" alt="language">
-                      Azərbaycan
-                      <img src="./assets/img/CaretDown.svg" alt="arrowdown" class="arrow-icon">
-                    </button>
-                    <div class="language-menu">
-                      <a href="#">English</a>
-                      <a href="#">Русский</a>
-                      <a href="#">Türkçe</a>
-                    </div>
-                  </div> -->
                   
             </div>
             
@@ -177,14 +152,6 @@
     </div>
     <div class="sizeForCardsAndMore">
         <div id="positionOfCardsRow" class="positionOfCardsRow">
-            <!-- <div>
-                <div class="cardGreen">
-                    <div class="imgContainer"><img src="./assets/img/93eff940f104368b9a10cb7d6b396a45.png" alt="product"></div>
-                    <div class="nameWeight"><h3>Yer kökü</h3><span>1 kg</span></div>
-                    <p>2.90 man</p>
-                    <button onclick="document.location='shop.html'">İndi sifariş et</button>
-                </div>
-            </div> -->
 
         </div>
             <div class="moreButton">
@@ -244,10 +211,6 @@
         <p>Sağlamlıqdan dadlılıqla, gündəlik ehtiyaclarınıza uyğun təzə və keyfiyyətli<br> məhsulların geniş çeşidi ilə tanış olun</p>
     </div>
     <div id="roundMain" class="roundMain">
-        <!-- <div class="cardRound">
-            <div class="circle"><img style="object-position: left;" src="./assets/img/eb6adc55682e347f51f8844fe8311034.jpg" alt="image1"></div>
-            <span>Süd məhsulları</span>
-        </div> -->
 
     </div>
   </div>
@@ -281,65 +244,6 @@
     <script src="./assets/scripts/aboutUs.js"></script>
     <script src="./assets/scripts/Categorymap.js"></script>
     <script src="./assets/scripts/favproductsale.js"></script>
-    <script>
-   // Инициализация AOS
-        AOS.init();
-
-
-
-        
-window.addEventListener("load", function () {
-  const mobileAuthControl = document.getElementById('mobileAuthControl');
-  const token = localStorage.getItem('token');
-  const userId = localStorage.getItem('userId');
-
-  if (window.innerWidth <= 768) {
-    if (token && userId) {
-      // show icon
-if (mobileAuthControl) {
-  mobileAuthControl.innerHTML = `
-    <a href="./profile.html" style="
-      padding: 10px 30px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      margin-top: 20px;
-      text-decoration: none;
-      font-size: 22px;
-      color: white;
-      transition: 0.3s;
-    " onmouseover="this.style.backgroundColor='rgba(19, 125, 59, 0.95)'" 
-       onmouseout="this.style.backgroundColor=''">
-      <img src="./assets/img/iconizer-Profile.svg" alt="Profile" style="margin-right: 10px;">
-      Profile
-    </a>
-  `;
-  mobileAuthControl.style.display = 'flex';
-}
-
-
-    } else {
-      // show register button
-      if (mobileAuthControl) {
-        mobileAuthControl.innerHTML = `
-          <button class="sidebar-button" onclick="document.location='mobile_sing.html'">Qeydiyyatdan keç</button>
-        `;
-        mobileAuthControl.style.display = 'flex';
-      }
-    }
-  }
-});
-
-
-  document.querySelectorAll('.cardRound').forEach(card => {
-    card.addEventListener('click', () => {
-      const categoryName = card.querySelector('span').innerText;
-      // Сохраняем имя категории, передаём его через URL
-      window.location.href = `shop.html?categoryTitle=${encodeURIComponent(categoryName)}`;
-    });
-  });
-
-  
-    </script>
+    <script src="./assets/scripts/additionalHome.js"></script>
 </body>
 </html>

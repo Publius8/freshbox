@@ -11,22 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Səbət</title>
 </head>
-<style>
-            .error {
-      background-color: rgba(220, 53, 69, 0.1);
-      color: red;
-      display: block;
-    }
-        .message {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: 500;
-      font-size: 0.9rem;
-      display: none;
-    }
-
-    </style>
 <body>  
     <header>
     <nav class="navbar">
@@ -161,135 +145,12 @@
 </div>
             
 
-
-
-
-
-
-<!-- <div class="purchases-list">
-
-                <div class="column-name">Məhsul</div>
-                <div class="column-name">Miqdarı</div>
-                <div class="column-name">Qiyməti</div>
-                
-                <div></div>
-
-                <div class="image-name-weight">
-                    <div class="image-box">
-                        <img src="./assets/img/4b0f78ae7944818833c90e57ab30b231.jpg" alt="productImage">
-                    </div>
-                    <div class="text-box">
-                        <h3>TəzəYerkökü</h3>
-                        <span>1 kiloqram</span>
-                    </div>
-                </div>
-
-                <div class="quatity-of-products">
-                    <form>
-                        <button type="button" onclick="changeValue(this, -1)">-</button>
-                        <input type="text" value="1" oninput="validateNumber(this)">
-                        <button type="button" onclick="changeValue(this, 1)">+</button>
-                    </form>
-                </div>
-
-                <div id="put_price_here" class="put_price_here">
-                 
-                </div>
-              
-                <div class="edit-container">
-                    <button id="edit"><img src="./assets/img/Edit.svg" alt="editIcon"></button>
-                </div>
-
-                <div class="line-for-mobile"></div>
-
-                <div class="image-name-weight">
-                    <div class="image-box">
-                        <img src="./assets/img/4b0f78ae7944818833c90e57ab30b231.jpg" alt="productImage">
-                    </div>
-                    <div class="text-box">
-                        <h3>TəzəYerkökü</h3>
-                        <span>1 kiloqram</span>
-                    </div>
-                </div>
-
-                <div class="quatity-of-products">
-                    <form>
-                        <button type="button" onclick="changeValue(this, -1)">-</button>
-                        <input type="text" value="1" oninput="validateNumber(this)">
-                        <button type="button" onclick="changeValue(this, 1)">+</button>
-                    </form>
-                </div>
-
-                <div id="put_price_here" class="put_price_here">
-                    <span>2.90 AZN</span>
-                </div>
-              
-                <div class="edit-container">
-                    <button id="edit"><img src="./assets/img/Edit.svg" alt="editIcon"></button>
-                </div>
-
-              </div> -->
-        
-              
-
-
-
             <div class="payment-check-button">
                 <button role="link" onclick="window.location.href='checkOut.html';">Ödənişə keç <img src="./assets/img/CaretRight.png" alt="arrowToright"></button>
             </div>
 
             <div class="recommendation_box">
-                <!-- <h2 style="text-align: center;">Tövsiyyə edilən məhsullar</h2>
-                <div class="recommendation_box_cards">
-                    <div class="card_recommendation">
-                        <div class="image-circle">
-                            <div class="image_box"><img src="./assets/img/7683c493753f0d78fecbe07dc26b0e8b.png" alt="productImage"></div>
-                            <button style="cursor: pointer;"><div class="wish_list_circle"><img src="./assets/img/orangeHerz.svg" alt="orangeHerz"></div></button>
-                        </div>
-                        <div class="name-weight">
-                            <h3>Greyfruit</h3>
-                            <span>1 kg</span>
-                        </div>
-                        <div class="price">
-                            <span>2.90 man</span>
-                        </div>
-                        <div>
-                            <button role="link" onclick="window.location.href='shop.html';">İndi sifariş et</button>
-                        </div>
-                    </div>
-                    <div class="card_recommendation">
-                        <div class="image-circle">
-                            <div class="image_box"><img src="./assets/img/7683c493753f0d78fecbe07dc26b0e8b.png" alt="productImage"></div>
-                            <button style="cursor: pointer;"><div class="wish_list_circle"><img src="./assets/img/orangeHerz.svg" alt="orangeHerz"></div></button>
-                        </div>
-                        <div class="name-weight">
-                            <h3>Greyfruit</h3>
-                            <span>1 kg</span>
-                        </div>
-                        <div class="price">
-                            <span>2.90 man</span>
-                        </div>
-                        <div>
-                            <button role="link" onclick="window.location.href='shop.html';">İndi sifariş et</button>
-                        </div>
-                    </div>
-                    <div class="card_recommendation">
-                        <div class="image-circle">
-                            <div class="image_box"><img src="./assets/img/7683c493753f0d78fecbe07dc26b0e8b.png" alt="productImage"></div>
-                            <button style="cursor: pointer;"><div class="wish_list_circle"><img src="./assets/img/orangeHerz.svg" alt="orangeHerz"></div></button>
-                        </div>
-                        <div class="name-weight">
-                            <h3>Greyfruit</h3>
-                            <span>1 kg</span>
-                        </div>
-                        <div class="price">
-                            <span>2.90 man</span>
-                        </div>
-                        <div>
-                            <button role="link" onclick="window.location.href='shop.html';">İndi sifariş et</button>
-                        </div>
-                    </div>
-                </div> -->
+
             </div>
         </div>
     </div>
@@ -321,83 +182,6 @@
             <script src="./assets/scripts/cart.js"></script>
             <script src="./assets/scripts/index.js"></script>
             <script src="./assets/scripts/aboutUs.js"></script>
-    <script>
-                // Инициализация AOS
-                AOS.init();
-     
-
-
-function changeValue(delta) {
-const input = document.getElementById("numberInput");
-let value = parseInt(input.value) || 0;
-value = Math.max(1, value + delta); // минимум 1
-input.value = value;
-}
-
-function validateNumber(input) {
-input.value = input.value.replace(/\D/g, ''); // убирает все нецифры
-}
-
-// counter scripts for products
-function changeValue(btn, delta) {
-    const input = btn.closest("form").querySelector("input");
-    let value = parseInt(input.value) || 0;
-    value += delta;
-    if (value < 1) value = 1;
-    input.value = value;
-}
-
-function validateNumber(input) {
-    let value = parseInt(input.value);
-    if (isNaN(value) || value < 1) {
-        input.value = 1;
-    }
-}
-
-window.addEventListener("load", function () {
-  const mobileAuthControl = document.getElementById('mobileAuthControl');
-  const token = localStorage.getItem('token');
-  const userId = localStorage.getItem('userId');
-
-  if (window.innerWidth <= 768) {
-    if (token && userId) {
-      // show icon
-if (mobileAuthControl) {
-  mobileAuthControl.innerHTML = `
-    <a href="./profile.html" style="
-      padding: 10px 30px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      margin-top: 20px;
-      text-decoration: none;
-      font-size: 22px;
-      color: white;
-      transition: 0.3s;
-    " onmouseover="this.style.backgroundColor='rgba(19, 125, 59, 0.95)'" 
-       onmouseout="this.style.backgroundColor=''">
-      <img src="./assets/img/iconizer-Profile.svg" alt="Profile" style="margin-right: 10px;">
-      Profile
-    </a>
-  `;
-  mobileAuthControl.style.display = 'flex';
-}
-    } else {
-      // show register button
-      if (mobileAuthControl) {
-        mobileAuthControl.innerHTML = `
-          <button class="sidebar-button" onclick="document.location='mobile_sing.html'">Qeydiyyatdan keç</button>
-        `;
-        mobileAuthControl.style.display = 'flex';
-      }
-    }
-  }
-});
-
-
-
-    
-    
-    </script>
+            <script src="./assets/scripts/additionalCart.js"></script>
 </body>
 </html>

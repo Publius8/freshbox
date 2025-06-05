@@ -24,7 +24,7 @@ function closePopup() {
  }, 300);
 }
 
-// Открытие окна
+// // Открытие окна
 modalPage.addEventListener("click", openPopup);
 
 // Закрытие окна только при клике на крестик
@@ -153,13 +153,13 @@ if (mobileAuthControl) {
       document.documentElement.style.overflow = ''; // This restores the default scrolling behavior
     }
     
-    const languageBtn = document.querySelector('.language-btn');
-    const languageDropdown = document.querySelector('.language-dropdown');
-    const arrowIcon = document.querySelector('.arrow-icon'); // выбираем стрелку
+    // const languageBtn = document.querySelector('.language-btn');
+    // const languageDropdown = document.querySelector('.language-dropdown');
+    // const arrowIcon = document.querySelector('.arrow-icon'); // выбираем стрелку
     
-    languageBtn.addEventListener('click', () => {
-        languageDropdown.classList.toggle('open');
-        arrowIcon.classList.toggle('rotated'); // переключаем класс для поворота
-    });
+    // languageBtn.addEventListener('click', () => {
+    //     languageDropdown.classList.toggle('open');
+    //     arrowIcon.classList.toggle('rotated'); // переключаем класс для поворота
+    // });
     
     

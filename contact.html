@@ -11,21 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Bizimlə əlaqə</title>
 </head>
-<style>
-          .error {
-      background-color: rgba(220, 53, 69, 0.1);
-      color: red;
-      display: block;
-    }
-        .message {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: 500;
-      font-size: 0.9rem;
-      display: none;
-    }
-</style>
 <body>
     <header>
         <nav class="navbar">
@@ -40,19 +25,17 @@
                 <a href="./aboutUs.html">Haqqımızda</a>
                 <a href="#">Bizimlə əlaqə</a>
                 <a href="./cart.html">
-                  <img src="./assets/img/cart.png" alt="cart">
-     <!-- <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- <img src="./assets/img/cart.png" alt="cart"> -->
+     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M14.2606 11.173L13.5024 14.1067" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M10.4141 11.173V14.1067" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M6.56787 11.173L7.32601 14.1067" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M6.46897 17.2523C5.56371 17.2523 4.38214 16.6335 4.08558 15.0159L3.30954 11.2938C2.79348 9.07154 3.7649 8.03162 5.61042 8.03162H15.133C16.9786 8.03162 17.9508 9.07154 17.4339 11.2938L16.6579 15.0159C16.3614 16.6335 15.1798 17.2523 14.2745 17.2523H6.46897Z" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M9.16527 4.01624L6.14209 7.99451" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M14.6028 7.99451L11.5796 4.01624" stroke="#F7F7F7" stroke-width="1.44" stroke-linecap="round" stroke-linejoin="round"/>
-</svg> -->
+</svg>
                 </a>
-                <a href="#">
-                    <!-- <img src="./assets/img/language.png" alt="language"> -->
-                </a>
+              
                         <div id="authControl">
             <button class="signIn" id="modalPage">Daxil ol</button>
             </div>
@@ -69,20 +52,9 @@
                     <a href="./aboutUs.html">Haqqımızda</a>
                     <a href="#">Bizimlə əlaqə</a>
                     <a href="./cart.html">Səbət</a>
-                    <br><br>
+                   
                 
-                    <!-- <div class="language-dropdown">
-                        <button class="language-btn">
-                          <img src="./assets/img/Earth - 3.svg" alt="language">
-                          Azərbaycan
-                          <img src="./assets/img/CaretDown.svg" alt="arrowdown" class="arrow-icon">
-                        </button>
-                        <div class="language-menu">
-                          <a href="#">English</a>
-                          <a href="#">Русский</a>
-                          <a href="#">Türkçe</a>
-                        </div>
-                      </div> -->
+                
                       
                 </div>
                 
@@ -206,75 +178,7 @@
 
             <script src="./assets/scripts/index.js"></script>
             <script src="./assets/scripts/aboutUs.js"></script>
-      <script>
-                // Инициализация AOS
-                AOS.init();
+            <script src="./assets/scripts/additionalContact.js"></script>
 
-window.addEventListener("load", function () {
-  const mobileAuthControl = document.getElementById('mobileAuthControl');
-  const token = localStorage.getItem('token');
-  const userId = localStorage.getItem('userId');
-
-  if (window.innerWidth <= 768) {
-    if (token && userId) {
-      // show icon
-if (mobileAuthControl) {
-  mobileAuthControl.innerHTML = `
-    <a href="./profile.html" style="
-      padding: 10px 30px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      margin-top: 20px;
-      text-decoration: none;
-      font-size: 22px;
-      color: white;
-      transition: 0.3s;
-    " onmouseover="this.style.backgroundColor='rgba(19, 125, 59, 0.95)'" 
-       onmouseout="this.style.backgroundColor=''">
-      <img src="./assets/img/iconizer-Profile.svg" alt="Profile" style="margin-right: 10px;">
-      Profile
-    </a>
-  `;
-  mobileAuthControl.style.display = 'flex';
-}
-    } else {
-      // show register button
-      if (mobileAuthControl) {
-        mobileAuthControl.innerHTML = `
-          <button class="sidebar-button" onclick="document.location='mobile_sing.html'">Qeydiyyatdan keç</button>
-        `;
-        mobileAuthControl.style.display = 'flex';
-      }
-    }
-  }
-});
-
-
-const sidebar = document.querySelector('.sidebar');
-const text = document.querySelector('.textHeadButton');
-
-function toggleSidebar(open) {
-  if (open) {
-    sidebar.classList.add('open');
-    text.classList.add('hide-text');
-  } else {
-    sidebar.classList.remove('open');
-    text.classList.remove('hide-text');
-  }
-}
-
-function openNav() {
-  toggleSidebar(true);
-  document.getElementById("overlaytus").style.display = "block";
-}
-
-function closeNav() {
-  toggleSidebar(false);
-  document.getElementById("overlaytus").style.display = "none";
-}
-
-    
-      </script>
 </body>
 </html>
